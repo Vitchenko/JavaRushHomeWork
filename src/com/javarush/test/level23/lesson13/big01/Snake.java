@@ -1,5 +1,7 @@
 package com.javarush.test.level23.lesson13.big01;
 
+import com.sun.javafx.scene.traversal.Direction;
+
 import java.util.ArrayList;
 
 /**
@@ -51,7 +53,32 @@ public class Snake
         return sections.get(0).getY();
     }
 
+    /**
+     Задание 15
+     Теперь осталось допилить змею.
+     Вот что я предлагаю насчет движения змеи:
+     Змея состоит из кусочков. Давай каждый ход просто добавлять один кусочек со стороны головы,
+     а самый последний - удалять. Тогда получится, что змея ползет.
+
+     Добавлять кусочек нужно рядом с текущей головой (кусочком номер 0).
+     С какой стороны добавлять зависит от direction (UP, DOWN, LEFT, RIGHT).
+     Подсказка:
+     а) Как добавить кусочек змеи в начало списка sections?
+     sections.add(0, new_section);
+     б) А как удалить последний?
+     sections.remove(sections.size()-1);
+
+     В методе move надо:
+     а) сделать шаг в текущем направлении (определяется direction)
+     б) проверить, что если змея уперлась в стену, то умереть (isAlive = false)
+     в) проверить, что если змея уперлась себя, то умереть (isAlive = false)
+     г) проверить, если змея встретила мышь - то съесть ее.
+    */
+
     public void move(){
+        if (direction==SnakeDirection.DOWN){
+
+        }
 
     }
 }

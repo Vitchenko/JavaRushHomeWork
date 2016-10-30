@@ -5,4 +5,12 @@ package com.javarush.test.level24.lesson14.big01;
  */
 public class Ball
 {
+    int x;
+    int y;
+    int size;
+    public void move(){
+    }
+    public void draw(){
+    }
+
 }
