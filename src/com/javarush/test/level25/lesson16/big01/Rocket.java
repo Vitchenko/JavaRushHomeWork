@@ -3,9 +3,9 @@ package com.javarush.test.level25.lesson16.big01;
 /**
  * Created by viv on 30.10.2016.
  */
-public class SpaceShip extends BaseObject
+public class Rocket extends BaseObject
 {
-    public SpaceShip(double x, double y, double radius)
+    public Rocket(double x, double y, double radius)
     {
         super(x, y, radius);
     }
