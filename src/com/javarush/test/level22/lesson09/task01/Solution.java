@@ -1,6 +1,9 @@
 package com.javarush.test.level22.lesson09.task01;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,31 +26,53 @@ public class Solution {
 
     public static void main(String[] args) throws IOException
     {
-        BufferedReader buff=new BufferedReader(new InputStreamReader(System.in));
-        //String fname=buff.readLine();
-        String fname="d:/1.txt";
-        buff.close();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String fname=br.readLine();
+        br.close();
 
-        String[] arrstr=null;
-        ArrayList<StringBuilder> arrSb=new ArrayList<>();
-        BufferedReader bf=new BufferedReader(new FileReader(fname));
+        //String fname="d:/1.txt";
 
-        while(bf.ready()){
-            arrstr = bf.readLine().split(" ");
-            for(int i=0;i<arrstr.length;i++){
-                StringBuilder sb=new StringBuilder();
-                arrSb.add(sb.append(arrstr[i]));
+        BufferedReader fr = new BufferedReader(new FileReader(fname));
+        String[] strLines=null;
+        ArrayList<String> arrStr = new ArrayList<>();
+
+        while (fr.ready())
+        {
+            strLines = fr.readLine().split(" ");
+            for (int i = 0; i < strLines.length; i++)
+            {
+                arrStr.add(strLines[i]);
             }
         }
-        bf.close();
 
-        for(int i=0;i<arrSb.size();i++){
-            System.out.println(arrSb.get(i));
+//        for(String s: arrStr){
+//            System.out.println(s);
+//        }
+//        System.out.println("----------");
 
+        for (int i=0;i<arrStr.size();i++){
+            StringBuilder sb=new StringBuilder(arrStr.get(i));
+
+            ArrayList<String> arrStr2 = new ArrayList<>(arrStr);
+            arrStr2.remove(arrStr.get(i));
+
+            int ff=arrStr2.indexOf(sb.reverse().toString());
+                if(ff>-1){
+                    Pair pp=new Pair();
+                    pp.first=sb.toString();
+                    pp.second=sb.reverse().toString();
+                    result.add(pp);
+                    arrStr.remove(sb.toString());
+                    arrStr.remove(sb.reverse().toString());
+                }
+            }
+
+
+        for(Pair s:result){
+            System.out.println(s);
         }
 
-
-
+        fr.close();
 
     }
 
