@@ -13,6 +13,12 @@ public class Tetris extends Thread
     {
         game = new Tetris();
         game.run();
+
+//        int[][] matrix=new int[10][8];
+//        matrix[3][4]=1;
+//        matrix[4][4]=1;
+//        Field fl=new Field(8,10,matrix);
+//        fl.print();
     }
 
 
