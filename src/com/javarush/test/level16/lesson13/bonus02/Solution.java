@@ -1,5 +1,8 @@
 package com.javarush.test.level16.lesson13.bonus02;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,4 +20,77 @@ import java.util.List;
 
 public class Solution {
     public static List<Thread> threads = new ArrayList<Thread>(5);
+
+    static {
+        threads.add(new Thread1());
+        threads.add(new Thread2());
+        threads.add(new Thread3());
+        threads.add(new Thread4());
+        threads.add(new Thread5());
+    }
+
+    public static class Thread1 extends Thread {
+        public void run () {
+            while (true) {}
+        }
+    }
+    public static class Thread2 extends Thread {
+        public void run () {
+            try{
+                while (!isInterrupted())
+                {
+
+                }
+                throw new InterruptedException();
+            }catch (InterruptedException e)
+            {
+                System.out.println("InterruptedException");
+            }
+        }
+    }
+    public static class Thread3 extends Thread {
+        public void run () {
+            while (true) {
+                try {
+                    System.out.println("Ура");
+                    Thread.sleep(500);
+                } catch (InterruptedException ignore) {/*NOP*/}
+            }
+        }
+    }
+    public static class Thread4 extends Thread implements Message {
+        public void showWarning() {
+            this.interrupt();
+            try
+            {
+                this.join();
+            }
+            catch(InterruptedException ignore)
+            {/*NOP*/}
+        }
+        public void run () {
+            Thread current = currentThread();
+            while (!current.isInterrupted()) {}
+        }
+    }
+    public static class Thread5 extends Thread {
+        private int sum;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        private String a;
+        public void run () {
+            while (!isInterrupted()) {
+                try
+                {
+                    if ((a = reader.readLine()).equals("N"))
+                    {
+                        System.out.println(sum);
+                        this.interrupt();
+                        continue;
+                    }
+                    sum = sum + Integer.parseInt(a);
+                } catch (IOException ignore) {/*NOP*/}
+            }
+        }
+    }
+
 }

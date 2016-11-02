@@ -1,29 +1,24 @@
 package com.javarush.test.level23.lesson13.big01;
 
-import com.sun.javafx.scene.traversal.Direction;
-
 import java.util.ArrayList;
 
 /**
- Надо:
- а) Передать в конструктор координаты головы змеи (x и y)
- б) создать в нем первый "кусочек змеи" (голову) и добавить его в коллекцию sections.
- в) isAlive выставить в true
- г) не забудь в конструкторе инициализировать переменную sections. В null не много-то и добавишь!
- д) создать и реализовать метод int getX(). Метод должен вернуть координату Х головы змеи.
- е) создать и реализовать метод int getY(). Метод должен вернуть координату Y головы змеи.
- ё) еще добавить классу метод move()- он нам пригодится попозже.
-
+ * Класс змея
  */
 public class Snake
 {
-    ArrayList<SnakeSection> sections=new ArrayList<>();
-    boolean isAlive;
-    SnakeDirection direction;
+    //Направление движения змеи
+    private SnakeDirection direction;
+    //Состояние - жива змея или нет.
+    private boolean isAlive;
+    //Список кусочков змеи.
+    private ArrayList<SnakeSection> sections = new ArrayList<SnakeSection>();
 
-    public ArrayList<SnakeSection> getSections()
+    public Snake(int x, int y)
     {
-        return sections;
+        sections = new ArrayList<SnakeSection>();
+        sections.add(new SnakeSection(x, y));
+        isAlive = true;
     }
 
     public boolean isAlive()
@@ -31,54 +26,100 @@ public class Snake
         return isAlive;
     }
 
+    public int getX()
+    {
+        return sections.get(0).getX();
+    }
+
+    public int getY()
+    {
+        return sections.get(0).getY();
+    }
+
     public SnakeDirection getDirection()
     {
         return direction;
     }
+
     public void setDirection(SnakeDirection direction)
     {
         this.direction = direction;
     }
 
-    public Snake(int x, int y){
-        SnakeSection sc=new SnakeSection(x,y);
-        sections.add(sc);
-        this.isAlive=true;
-    }
-
-    public int getX(){
-        return sections.get(0).getX();
-    }
-    public int getY(){
-        return sections.get(0).getY();
+    public ArrayList<SnakeSection> getSections()
+    {
+        return sections;
     }
 
     /**
-     Задание 15
-     Теперь осталось допилить змею.
-     Вот что я предлагаю насчет движения змеи:
-     Змея состоит из кусочков. Давай каждый ход просто добавлять один кусочек со стороны головы,
-     а самый последний - удалять. Тогда получится, что змея ползет.
+     * Метод перемещает змею на один ход.
+     * Направление перемещения задано переменной direction.
+     */
+    public void move()
+    {
+        if (!isAlive) return;
 
-     Добавлять кусочек нужно рядом с текущей головой (кусочком номер 0).
-     С какой стороны добавлять зависит от direction (UP, DOWN, LEFT, RIGHT).
-     Подсказка:
-     а) Как добавить кусочек змеи в начало списка sections?
-     sections.add(0, new_section);
-     б) А как удалить последний?
-     sections.remove(sections.size()-1);
+        if (direction == SnakeDirection.UP)
+            move(0, -1);
+        else if (direction == SnakeDirection.RIGHT)
+            move(1, 0);
+        else if (direction == SnakeDirection.DOWN)
+            move(0, 1);
+        else if (direction == SnakeDirection.LEFT)
+            move(-1, 0);
+    }
 
-     В методе move надо:
-     а) сделать шаг в текущем направлении (определяется direction)
-     б) проверить, что если змея уперлась в стену, то умереть (isAlive = false)
-     в) проверить, что если змея уперлась себя, то умереть (isAlive = false)
-     г) проверить, если змея встретила мышь - то съесть ее.
-    */
+    /**
+     * Метод перемещает змею в соседнюю клетку.
+     * Кординаты клетки заданы относительно текущей головы с помощью переменных (dx, dy).
+     */
+    private void move(int dx, int dy)
+    {
+        //Создаем новую голову - новый "кусочек змеи".
+        SnakeSection head = sections.get(0);
+        head = new SnakeSection(head.getX() + dx, head.getY() + dy);
 
-    public void move(){
-        if (direction==SnakeDirection.DOWN){
+        //Проверяем - не вылезла ли голова за границу комнаты
+        checkBorders(head);
+        if (!isAlive) return;
 
+        //Проверяем - не пересекает ли змея  саму себя
+        checkBody(head);
+        if (!isAlive) return;
+
+        //Проверяем - не съела ли змея мышь.
+        Mouse mouse = Room.game.getMouse();
+        if (head.getX() == mouse.getX() && head.getY() == mouse.getY()) //съела
+        {
+            sections.add(0, head);                  //Добавили новую голову
+            Room.game.eatMouse();                   //Хвот не удаляем, но создаем новую мышь.
         }
+        else //просто движется
+        {
+            sections.add(0, head);                  //добавили новую голову
+            sections.remove(sections.size() - 1);   //удалили последний элемент с хвоста
+        }
+    }
 
+    /**
+     *  Метод проверяет - находится ли новая голова в пределах комнаты
+     */
+    private void checkBorders(SnakeSection head)
+    {
+        if ((head.getX() < 0 || head.getX() >= Room.game.getWidth()) || head.getY() < 0 || head.getY() >= Room.game.getHeight())
+        {
+            isAlive = false;
+        }
+    }
+
+    /**
+     *  Метод проверяет - не совпадает ли голова с каким-нибудь участком тела змеи.
+     */
+    private void checkBody(SnakeSection head)
+    {
+        if (sections.contains(head))
+        {
+            isAlive = false;
+        }
     }
 }
