@@ -14,6 +14,9 @@ public final class CurrencyManipulatorFactory
     static HashMap<String, CurrencyManipulator> map = new HashMap<>();
 
     public static CurrencyManipulator getManipulatorByCurrencyCode(String currencyCode){
-        return null;
+
+
+        CurrencyManipulator cm=new CurrencyManipulator("usd");
+        return cm;
     }
 }

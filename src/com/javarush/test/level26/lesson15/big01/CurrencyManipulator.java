@@ -20,15 +20,19 @@ public class CurrencyManipulator
 {
     public String currencyCode;
     public Map<Integer, Integer> denominations=new HashMap<>();
-    public String getCurrencyCode()
-    {
-        return currencyCode;
-    }
+
 
     public CurrencyManipulator(String currencyCode)
     {
         this.currencyCode = currencyCode;
     }
+
+
+    public String getCurrencyCode()
+    {
+        return currencyCode;
+    }
+
 
 
 
