@@ -26,7 +26,7 @@ public class Manager {      //singleton
 
     public synchronized Table getNextTable() {           // официант ходит по кругу от 1 стола к 10
         Table table = restaurantTables.get(currentIndex);
-        currentIndex = (currentIndex + 1) % 10;
+        currentIndex = (currentIndex + 1) % 10;//%???
         return table;
     }
 

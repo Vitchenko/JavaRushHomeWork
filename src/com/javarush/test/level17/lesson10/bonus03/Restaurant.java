@@ -22,7 +22,9 @@ public class Restaurant {
         threads.add(cook);
 
         waiter.start();
+        //waiter.join();
         cook.start();
+        //cook.join();
 
         Thread.sleep(2000);
         cookTarget.continueWorking = false;
