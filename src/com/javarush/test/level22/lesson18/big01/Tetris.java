@@ -3,40 +3,44 @@ package com.javarush.test.level22.lesson18.big01;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by viv on 26.10.2016.
+ *  Класс Tetris - содержит основной функционал игры.
  */
-public class Tetris extends Thread
+public class Tetris
 {
-    private Field field;
-    private Figure figure;
-    public static Tetris game;
+
+    private Field field;                //Поле с клетками
+    private Figure figure;              //Фигурка
+
     private boolean isGameOver;         //Игра Окончена?
 
-    public static void main(String[] args)
+    public Tetris(int width, int height)
     {
-        game = new Tetris();
-        game.run();
-
-//        int[][] matrix=new int[10][8];
-//        matrix[3][4]=1;
-//        matrix[4][4]=1;
-//        Field fl=new Field(8,10,matrix);
-//        fl.print();
+        field = new Field(width, height);
+        figure = null;
     }
 
-
+    /**
+     * Геттер переменной field.
+     */
     public Field getField()
     {
         return field;
     }
 
+    /**
+     * Геттер переменной figure.
+     */
     public Figure getFigure()
     {
         return figure;
     }
 
-    public void run(){
-
+    /**
+     *  Основной цикл программы.
+     *  Тут происходят все важные действия
+     */
+    public void run() throws Exception
+    {
         //Создаем объект "наблюдатель за клавиатурой" и стартуем его.
         KeyboardObserver keyboardObserver = new KeyboardObserver();
         keyboardObserver.start();
@@ -59,38 +63,65 @@ public class Tetris extends Thread
                 //Если "стрелка влево" - сдвинуть фигурку влево
                 if (event.getKeyCode() == KeyEvent.VK_LEFT)
                     figure.left();
-                    //Если "стрелка вправо" - сдвинуть фигурку вправо
+                //Если "стрелка вправо" - сдвинуть фигурку вправо
                 else if (event.getKeyCode() ==  KeyEvent.VK_RIGHT)
                     figure.right();
-                    //Если  код клавишы равен 12 ("цифра 5 на доп. клавиатуре") - повернуть фигурку
+                //Если  код клавиши равен 12 ("цифра 5 на доп. клавиатуре") - повернуть фигурку
                 else if (event.getKeyCode() ==  12)
                     figure.rotate();
-                    //Если "пробел" - фигурка падает вниз на максимум
+                //Если "пробел" - фигурка падает вниз на максимум
                 else if (event.getKeyCode() ==  KeyEvent.VK_SPACE)
                     figure.downMaximum();
             }
 
             step();             //делаем очередной шаг
             field.print();      //печатаем состояние "поля"
-            try
-            {
-                Thread.sleep(300);  //пауза 300 миллисекунд - 1/3 секунды
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
+            Thread.sleep(300);  //пауза 300 миллисекунд - 1/3 секунды
         }
 
         //Выводим сообщение "Game Over"
         System.out.println("Game Over");
-
     }
 
-    public void step(){
+    public void step()
+    {
+        //опускам фигурку вниз
+        figure.down();
 
+        //если разместить фигурку на текущем месте невозможно
+        if (!figure.isCurrentPositionAvailable())
+        {
+            figure.up();                    //поднимаем обратно
+            figure.landed();                //приземляем
+
+            isGameOver = figure.getY() <= 1;//если фигурка приземлилась на самом верху - игра окончена
+
+            field.removeFullLines();        //удаляем заполненные линии
+
+            figure = FigureFactory.createRandomFigure(field.getWidth() / 2, 0); //создаем новую фигурку
+        }
     }
 
+    /**
+     * Сеттер для figure
+     */
+    public void setFigure(Figure figure)
+    {
+        this.figure = figure;
+    }
 
+    /**
+     * Сеттер для field
+     */
+    public void setField(Field field)
+    {
+        this.field = field;
+    }
 
+    public static Tetris game;
+    public static void main(String[] args) throws Exception
+    {
+        game = new Tetris(10, 20);
+        game.run();
+    }
 }
