@@ -3,20 +3,13 @@ package com.javarush.test.level25.lesson16.big01;
 import java.util.ArrayList;
 
 /**
- Задание 5
- Чего не хватает классу Space?
- Правильно - методов run() и draw().
- run управляет всей логикой игры, если ты помнишь.
- А draw отвечает за отрисовку очередного "кадра".
-
- А еще нам пригодится метод sleep(int ms)
- Создай их.
 
  */
 public class Space
 {
     int width, height;
     SpaceShip ship;
+    public static Space game;
 
     public int getWidth()
     {
