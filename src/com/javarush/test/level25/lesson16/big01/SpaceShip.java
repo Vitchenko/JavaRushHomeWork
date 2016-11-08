@@ -1,69 +1,71 @@
 package com.javarush.test.level25.lesson16.big01;
 
 /**
- Задание 14
- Теперь перейдем к методам draw, move
- В методе move() надо:
- а) увеличить x на dx
- б) проверить, не вылез ли корабль за границы космоса [0, Space.game.getWidth()]
- Учти, что ширина корабля равна двум его радиусам.
-
- Метод draw я напишу сам - просто объяви пустой метод.
-
- Еще нам понадобится метод fire(), ведь корабль умеет стрелять.
- Этот метод вызывается, когда надо произвести выстрел.
- В этом методе надо
- а) создать две ракеты
- б) установить им координаты левого края корабля и правого края корабля (пушки корабля находятся по краям)
- в) добавить эти ракеты в список ракет объекта game.
-
- Его можно получить так:
- Space.game.getRockets()
- }
-
+ * Класс для космического корабля
  */
 public class SpaceShip extends BaseObject
 {
-    public SpaceShip(double x, double y)
-    {
-        super(x, y, 3);
-    }
+    //картинка корабля для отрисовки
+    private static int[][] matrix = {
+            {0, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0},
+            {0, 0, 1, 0, 0},
+            {1, 0, 1, 0, 1},
+            {1, 1, 1, 1, 1},
+    };
+
+    //вектор движения (-1 влево,+1 вправо)
+    private double dx = 0;
 
     public SpaceShip(int x, int y)
     {
         super(x, y, 3);
     }
 
-    double dx=0;
-    public void moveLeft(){
-     dx=-1;
-    }
-    public void moveRight(){
-        dx=1;
-    }
-
-    public void move(){
-        x+=dx;
+    /**
+     * Устанавливаем вектор движения влево
+     */
+    public void moveLeft()
+    {
+        dx = -1;
     }
 
-    public void draw(){
-
+    /**
+     * Устанавливаем вектор движения вправо
+     */
+    public void moveRight()
+    {
+        dx = 1;
     }
 
-    /*Еще нам понадобится метод fire(), ведь корабль умеет стрелять.
- Этот метод вызывается, когда надо произвести выстрел.
- В этом методе надо
- а) создать две ракеты
- б) установить им координаты левого края корабля и правого края корабля (пушки корабля находятся по краям)
- в) добавить эти ракеты в список ракет объекта game.
-
- Его можно получить так:
- Space.game.getRockets()*/
-
-    public void fire(){
-        Rocket rc1=new Rocket(this.x,this.y);
-        Rocket rc2=new Rocket(this.x,this.y);
+    /**
+     * Метод рисует свой объект на "канвасе".
+     */
+    @Override
+    public void draw(Canvas canvas)
+    {
+        canvas.drawMatrix(x - radius + 1, y, matrix, 'M');
     }
 
+    /**
+     * Двигаем себя на один ход.
+     * Проверяем столкновение с границами.
+     */
+    @Override
+    public void move()
+    {
+        x = x + dx;
 
+        checkBorders(radius, Space.game.getWidth() - radius + 1, 1, Space.game.getHeight() + 1);
+    }
+
+    /**
+     * Стреляем.
+     * Создаем две ракеты: слева и справа от корабля.
+     */
+    public void fire()
+    {
+        Space.game.getRockets().add(new Rocket(x - 2, y));
+        Space.game.getRockets().add(new Rocket(x + 2, y));
+    }
 }
