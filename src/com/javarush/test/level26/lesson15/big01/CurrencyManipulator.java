@@ -4,21 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- Задание 3
- 1. Создадим класс CurrencyManipulator, который будет хранить всю информацию про выбранную
- валюту.
- String currencyCode - код валюты, например, USD. Состоит из трех букв
- Map<Integer, Integer> denominations - это Map<номинал, количество>
- Чтобы можно было посмотреть, к какой валюте относится манипулятор, добавим геттер для currencyCode
- Очевидно, что манипулятор никак не может функционировать без названия валюты,
- поэтому добавим конструктор с этим параметром и проинициализируем currencyCode
-
-
+ 4. В классе CurrencyManipulator создайте метод void addAmount(int denomination, int count),
+ который добавит введенные номинал и количество банкнот
 
  */
 public class CurrencyManipulator
 {
-    public String currencyCode;
+    /**String currencyCode - код валюты, например, USD. Состоит из трех букв
+     Map<Integer, Integer> denominations - это Map<номинал, количество>*/
+
+    private String currencyCode;
     public Map<Integer, Integer> denominations=new HashMap<>();
 
 
@@ -33,7 +28,9 @@ public class CurrencyManipulator
         return currencyCode;
     }
 
-
+    public void addAmount(int denomination, int count){
+        denominations.put(denomination,count);
+    }
 
 
 }
