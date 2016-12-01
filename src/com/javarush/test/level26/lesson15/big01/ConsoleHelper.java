@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 public class ConsoleHelper
 {
-    public static final BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
 
     public static void writeMessage(String message){
         System.out.println(message);
@@ -17,6 +17,7 @@ public class ConsoleHelper
     public static String readString() throws IOException
     {
         return bf.readLine();
+
     }
 
 
@@ -26,7 +27,7 @@ public class ConsoleHelper
         while(true){
             System.out.println("Input valute code?");
             strInVal=readString();
-            if(strInVal.length()==3 && checkString(strInVal)){
+            if(strInVal.length()==3 && !checkString(strInVal)){
                 return strInVal.toUpperCase();
             }else{
                 System.out.println("Valute code is incorrect. Repeat please?");

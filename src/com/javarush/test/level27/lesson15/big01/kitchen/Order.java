@@ -1,15 +1,37 @@
 package com.javarush.test.level27.lesson15.big01.kitchen;
 
+import com.javarush.test.level27.lesson15.big01.ConsoleHelper;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.ConsoleHandler;
 
 /**
- 4. В классе Order (заказ) должна быть информация, относящаяся к списку выбранных пользователем блюд.
- Т.е. где-то должен быть список всех блюд, и должен быть список выбранных блюд в классе Order.
- Нам нужен класс Dish(Блюдо), создадим его в пакете kitchen. Пусть это будет энум с какими-то данными,
- например, Fish, Steak, Soup, Juice, Water
+
+ 4. Перепишите метод toString в классе Order. Пусть он возвращает пустую строку, если нет блюд в заказе, иначе
+ вывод должен быть аналогичный примеру в порядке добавления блюд. Используйте ConsoleHelper.
+ Пример:
+ Your order: [Juice, Fish] of Tablet{number=5}
  */
 public class Order
 {
-    ArrayList <Dish> allDishs=new ArrayList<>();
-    ArrayList <Dish> choiseDishs=new ArrayList<>();
+    private ArrayList <Dish> allDishes=new ArrayList<>();
+    private ArrayList <Dish> choiseDishes=new ArrayList<>();
+
+    private List<Dish> dishes;
+
+    public Order(List<Dish> dishes)
+    {
+        this.dishes = ConsoleHelper.getAllDishesForOrder();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Order{" +
+                "allDishs=" + allDishes +
+                ", choiseDishs=" + choiseDishes +
+                ", dishes=" + dishes +
+                '}';
+    }
 }
