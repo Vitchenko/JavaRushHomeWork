@@ -1,37 +1,39 @@
 package com.javarush.test.level27.lesson15.big01.kitchen;
 
 import com.javarush.test.level27.lesson15.big01.ConsoleHelper;
+import com.javarush.test.level27.lesson15.big01.Tablet;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.logging.ConsoleHandler;
 
-/**
 
- 4. Перепишите метод toString в классе Order. Пусть он возвращает пустую строку, если нет блюд в заказе, иначе
- вывод должен быть аналогичный примеру в порядке добавления блюд. Используйте ConsoleHelper.
- Пример:
- Your order: [Juice, Fish] of Tablet{number=5}
- */
+
 public class Order
 {
-    private ArrayList <Dish> allDishes=new ArrayList<>();
-    private ArrayList <Dish> choiseDishes=new ArrayList<>();
 
+    private Tablet tablet;
     private List<Dish> dishes;
 
-    public Order(List<Dish> dishes)
-    {
-        this.dishes = ConsoleHelper.getAllDishesForOrder();
+
+    public Order(Tablet tablet) throws IOException {
+        this.tablet = tablet;
+        dishes = ConsoleHelper.getAllDishesForOrder();
     }
 
+
     @Override
-    public String toString()
-    {
-        return "Order{" +
-                "allDishs=" + allDishes +
-                ", choiseDishs=" + choiseDishes +
-                ", dishes=" + dishes +
-                '}';
+    public String toString() {
+        if (dishes.isEmpty()) {
+            return "";
+        }
+        else {
+            return "Your order: " + dishes.toString() +" of "+  tablet.toString();
+        }
+
     }
+
+//    public boolean isEmpty()
+//    {
+//        return empty;
+//    }
 }

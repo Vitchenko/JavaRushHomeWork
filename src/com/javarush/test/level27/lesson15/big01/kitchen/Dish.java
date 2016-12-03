@@ -1,5 +1,7 @@
 package com.javarush.test.level27.lesson15.big01.kitchen;
 
+import java.util.Arrays;
+
 /**
  * Created by viv on 06.11.2016.
  */
@@ -8,15 +10,12 @@ public enum Dish
     Fish, Steak, Soup, Juice, Water;
 
 
-    public static String allDishesToString(){
-
-        StringBuffer sb=new StringBuffer();
-        String str;
-        for(Dish st:Dish.values()){
-            sb.append(st+", ");
+    public static String allDishesToString() {
+        if (values().length == 0) {
+            return "";
         }
-        str=sb.substring(0,sb.length()-2);
-        return str;
+        return Arrays.toString(values()).substring(1, Arrays.toString(values()).length() - 1);
     }
+
 
 }
