@@ -16,8 +16,9 @@ public class Order
 
 
     public Order(Tablet tablet) throws IOException {
+
+        this.dishes = ConsoleHelper.getAllDishesForOrder();
         this.tablet = tablet;
-        dishes = ConsoleHelper.getAllDishesForOrder();
     }
 
 
@@ -32,8 +33,5 @@ public class Order
 
     }
 
-//    public boolean isEmpty()
-//    {
-//        return empty;
-//    }
+
 }

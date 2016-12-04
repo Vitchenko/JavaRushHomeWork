@@ -6,19 +6,19 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class Cook extends Observable implements Observer
+public class Cook implements Observer
 {
-    private String cookName;
+    private String name;
 
-    public Cook(String cookName)
+    public Cook(String name)
     {
-        this.cookName = cookName;
+        this.name = name;
     }
 
     @Override
     public String toString()
     {
-        return "Cook{" + "cookName='" + cookName + '\'' +'}';
+        return name;
     }
 
 
@@ -27,6 +27,4 @@ public class Cook extends Observable implements Observer
     {
         ConsoleHelper.writeMessage("Start cooking - " + arg);
     }
-
-
 }

@@ -13,18 +13,20 @@ public class Tablet extends Observable
     private final int number;
     public static Logger logger = Logger.getLogger(Tablet.class.getName());
 
+
     public Tablet(int number)
     {
         this.number = number;
     }
 
+
+
     public void createOrder()
     {
 
-        Order order = null;
         try
         {
-            order = new Order(this);
+           Order order = new Order(this);
 
             ConsoleHelper.writeMessage(order.toString());
             setChanged();
@@ -47,8 +49,5 @@ public class Tablet extends Observable
 
     }
 
-    public int getNumber()
-    {
-        return number;
-    }
+
 }
