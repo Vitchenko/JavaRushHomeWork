@@ -1,6 +1,9 @@
 package com.javarush.test.level27.lesson15.big01.ad;
 
+/**1. В классе Advertisement создайте поле long amountPerOneDisplaying, которое инициализируйте в конструкторе.
+ Оно должно равняться стоимости одного показа рекламного объявления в копейках.
 
+ 2. В классе Advertisement создайте геттеры для полей name, duration и amountPerOneDisplaying*/
 public class Advertisement
 {
 
@@ -9,6 +12,7 @@ public class Advertisement
     private long initialAmount;
     private int hits;
     private int duration;
+    private long amountPerOneDisplaying;
 
     public Advertisement(Object content, String name, long initialAmount, int hits, int duration)
     {
@@ -17,6 +21,22 @@ public class Advertisement
         this.initialAmount = initialAmount;
         this.hits = hits;
         this.duration = duration;
+        this.amountPerOneDisplaying = initialAmount / hits;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public int getDuration()
+    {
+        return duration;
+    }
+
+    public long getAmountPerOneDisplaying()
+    {
+        return amountPerOneDisplaying;
     }
 }
 
