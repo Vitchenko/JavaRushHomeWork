@@ -21,6 +21,13 @@ public class Order
         this.tablet = tablet;
     }
 
+    public int getTotalCookingTime(){
+        int totalDuration = 0;
+        for (Dish dish : dishes) {
+            totalDuration += dish.getDuration();
+        }
+        return totalDuration;
+    }
 
     @Override
     public String toString() {
@@ -34,4 +41,8 @@ public class Order
     }
 
 
+    public boolean isEmpty()
+    {
+        return dishes == null || dishes.isEmpty();
+    }
 }
