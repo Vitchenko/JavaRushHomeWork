@@ -1,63 +1,120 @@
 package com.javarush.test.level26.lesson15.big01;
 
+import com.javarush.test.level26.lesson15.big01.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class ConsoleHelper
 {
-    static BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 
     public static void writeMessage(String message){
         System.out.println(message);
     }
 
-    public static String readString() throws IOException
+    public static void printExitMessage()
     {
-        return bf.readLine();
-
+        ConsoleHelper.writeMessage("Terminated. Thank you for visiting JavaRush cash machine. Good luck.");
     }
 
-
-    public static String askCurrencyCode() throws IOException
+    public static String readString() throws InterruptOperationException
     {
-        String strInVal;
-        while(true){
-            System.out.println("Input valute code?");
-            strInVal=readString();
-            if(strInVal.length()==3 && !checkString(strInVal)){
-                return strInVal.toUpperCase();
-            }else{
-                System.out.println("Valute code is incorrect. Repeat please?");
-            }
+        String message = "";
+        try
+        {
+            message = reader.readLine().trim();
+            if (message.equalsIgnoreCase("EXIT")) throw new InterruptOperationException();
         }
+        catch (IOException ignored)
+        {
+        }
+        return message;
+
     }
 
 
-    public static String[] getValidTwoDigits(String currencyCode) throws IOException
+    public static String askCurrencyCode() throws InterruptOperationException
     {
 
-        String[] strArrInVal;
-        while(true){
-            System.out.println("Input two digital. First - nominal, Second - banknots qantity?");
-            strArrInVal=readString().split(" ");
+        String test;
+        writeMessage("Input valute code?");
+        while (true)
+        {
+            test = readString();
+            if (test.length() == 3)
+                break;
+            else
+                writeMessage("Valute code is incorrect. Repeat please?");
 
-            if(strArrInVal.length==2 && checkString(strArrInVal[0]) && checkString(strArrInVal[1]) &&
-                    (Integer.parseInt(strArrInVal[0])>0)&&(Integer.parseInt(strArrInVal[1])>0)){
+        }
+        test = test.toUpperCase();
+        return test;
 
-                return strArrInVal;
-            }else{
-                System.out.println("Incorrect. \"200 5\" Repast please");
+
+    }
+
+
+    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException
+    {
+
+        String[] array;
+        writeMessage("Input two digital. First - nominal, Second - banknots qantity?");
+
+        while (true)
+        {
+            String s = readString();
+            array = s.split(" ");
+            int k;
+            int l;
+            try
+            {
+                k = Integer.parseInt(array[0]);
+                l = Integer.parseInt(array[1]);
             }
+            catch (Exception e)
+            {
+                writeMessage("Incorrect. \"200 5\" Repast please");
+                continue;
+            }
+            if (k <= 0 || l <= 0 || array.length > 2)
+            {
+                writeMessage("Incorrect. \"200 5\" Repast please");
+                continue;
+            }
+            break;
+        }
+        return array;
+
+    }
+
+
+    public static Operation askOperation() throws InterruptOperationException
+    {
+        while (true)
+        {
+            String line = readString();
+            if (checkWithRegExp(line))
+                return Operation.getAllowableOperationByOrdinal(Integer.parseInt(line));
+            else
+                writeMessage("Ведите номер операции");
         }
 
     }
 
-    public static boolean checkString(String string) {
-        if (string == null) return false;
-        return string.matches("^-?\\d+$");
+
+
+    public static boolean checkWithRegExp(String Name)
+    {
+        Pattern p = Pattern.compile("^[1-4]$");
+        Matcher m = p.matcher(Name);
+        return m.matches();
     }
+
+
 
 }

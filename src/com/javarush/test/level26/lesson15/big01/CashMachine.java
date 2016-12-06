@@ -1,19 +1,41 @@
 package com.javarush.test.level26.lesson15.big01;
 
-import java.io.IOException;
+import com.javarush.test.level26.lesson15.big01.command.CommandExecutor;
+import com.javarush.test.level26.lesson15.big01.exception.InterruptOperationException;
+
+
 import java.util.Locale;
 
 public class CashMachine
 {
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws InterruptOperationException
     {
         Locale.setDefault(Locale.ENGLISH);
-        ConsoleHelper ch = new ConsoleHelper();
-        CurrencyManipulatorFactory cmf=null;
-        String strCodVal= ch.askCurrencyCode();
-        String[] arrDenCount=ch.getValidTwoDigits(strCodVal);
-        CurrencyManipulator cn=cmf.getManipulatorByCurrencyCode(strCodVal);
-        cn.addAmount(Integer.parseInt(arrDenCount[0]),Integer.parseInt(arrDenCount[1]));
-        //ConsoleHelper.bf.close();
+
+        try
+        {
+            CommandExecutor.execute(Operation.LOGIN);
+            Operation operation;
+            do
+            {
+                ConsoleHelper.writeMessage("Choose.operation" + " \n" +
+                        "INFO" + ": 1;\n" +
+                        "DEPOSIT" + ": 2;\n" +
+                        "WITHDRAW" + ": 3;\n" +
+                        "EXIT" + ": 4");
+                operation = ConsoleHelper.askOperation();
+
+                CommandExecutor.execute(operation);
+            }
+            while (operation != Operation.EXIT);
+        } catch (InterruptOperationException e) {
+            try {
+                CommandExecutor.execute(Operation.EXIT);
+            } catch (InterruptOperationException ignored) {
+            }
+            ConsoleHelper.printExitMessage();
+        }
     }
+
+
 }

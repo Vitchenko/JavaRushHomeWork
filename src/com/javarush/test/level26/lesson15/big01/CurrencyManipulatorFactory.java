@@ -6,11 +6,12 @@ import java.util.HashMap;
 public class CurrencyManipulatorFactory
 {
     private static HashMap<String, CurrencyManipulator> map = new HashMap<>();
-
+    static boolean isExist = false;
 
     public static CurrencyManipulator getManipulatorByCurrencyCode(String currencyCode)
     {
 
+        isExist = false;
         CurrencyManipulator current;
 
         if (map.containsKey(currencyCode))
@@ -31,4 +32,6 @@ public class CurrencyManipulatorFactory
     {
         return map.values();
     }
+
+
 }
