@@ -12,8 +12,6 @@ public class Human {
 
     protected int[] size;
 
-    private List<Human> children = new ArrayList<>();
-
     protected boolean isSoldier;
 
     public static final int FIRST = 1;
@@ -35,6 +33,10 @@ public class Human {
         this.id = nextId;
         nextId++;
     }
+
+    //refactoring
+    private List<Human> children = new ArrayList<>();
+
 
     public int getAge() {
         return age;
