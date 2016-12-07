@@ -1,8 +1,5 @@
 package com.javarush.test.level29.lesson15.big01.human;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Human {
     public static int nextId = 0;
     private int id;
@@ -33,10 +30,6 @@ public class Human {
         this.id = nextId;
         nextId++;
     }
-
-    //refactoring
-    private List<Human> children = new ArrayList<>();
-
 
     public int getAge() {
         return age;
