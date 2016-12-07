@@ -1,8 +1,10 @@
 package com.javarush.test.level28.lesson15.big01.model;
 
-/**
- * Created by viv on 09.11.2016.
- */
+import com.javarush.test.level28.lesson15.big01.vo.Vacancy;
+
+import java.util.List;
+
+
 public class Provider
 {
     private Strategy strategy;
@@ -21,4 +23,10 @@ public class Provider
     {
         return strategy;
     }
+
+    public List<Vacancy> getJavaVacancies(String searchString){
+        return strategy.getVacancies(searchString);
+    }
+
+
 }
