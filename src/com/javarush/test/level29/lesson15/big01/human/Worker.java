@@ -5,13 +5,16 @@ public class Worker {
     private double salary;
     public String company;
 
-    public Worker(String name, int age)
+    public Worker(Human human, double salary, String company)
     {
-        human = new Human(false);
+        this.human = human;
+        this.salary = salary;
+        this.company = company;
     }
 
     public void live() {
         human.live();
+
     }
 
     public double getSalary() {

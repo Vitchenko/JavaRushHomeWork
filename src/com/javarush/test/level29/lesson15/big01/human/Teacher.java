@@ -8,13 +8,12 @@ public class Teacher extends Human {
     private int numberOfStudents;
     private String university;
 
-    public Teacher(String name, int age, int numberOfStudents) {
-        super(false);
-        this.name = name;
-        this.age = age;
+    public Teacher(String name, int age, int numberOfStudents, String university)
+    {
+        super(name, age);
         this.numberOfStudents = numberOfStudents;
+        this.university = university;
     }
-
 
     public void live() {
         teach();
