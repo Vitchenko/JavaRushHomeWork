@@ -19,7 +19,11 @@ public class Teacher extends UniversityPerson {
     }
 
 
+    @Override
     public String getPosition() {
         return "Преподаватель";
     }
+
+
+
 }
