@@ -41,16 +41,24 @@ public class Student extends UniversityPerson {
     {
         averageGrade += 0.2;
     }
+//6.1.	Замена параметра набором специализированных методов. Замени метод setValue() класса
+//    Student специализированными методами setCourse и setAverageGrade.
 
-    public void setValue(String name, double value) {
-        if (name.equals("averageGrade")) {
-            averageGrade = value;
-            return;
-        }
-        if (name.equals("course")) {
-            course = (int)value;
-            return;
-        }
+//    public void setValue(String name, double value) {
+//        if (name.equals("averageGrade")) {
+//            averageGrade = value;
+//            return;
+//        }
+//        if (name.equals("course")) {
+//            course = (int)value;
+//            return;
+//        }
+//    }
+    public void setCourse(int value){
+        course=value;
+    }
+    public void setAverageGrade(double value){
+        averageGrade = value;
     }
     
     public void setBeginningOfSession(int day, int month, int year) {
