@@ -1,12 +1,49 @@
 package com.javarush.test.level29.lesson15.big01.human;
 
-import java.util.Date;
+import java.util.ArrayList;
 
-public class University extends Student {
+import java.util.List;
 
-    public University(String name, int age, double averageGrade, String university, Date beginningOfSession, Date endOfSession)
+public class University {
+
+    private List<Student> students=new ArrayList<>();
+    private String name;
+    private int age;
+
+    public University(String name, int age)
     {
-        super(name, age, averageGrade, university, beginningOfSession, endOfSession);
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public int getAge()
+    {
+        return age;
+    }
+
+    public void setAge(int age)
+    {
+        this.age = age;
+    }
+
+    public List<Student> getStudents()
+    {
+        return students;
+    }
+
+    public void setStudents(List<Student> students)
+    {
+        this.students = students;
     }
 
     public Student getStudentWithAverageGrade() {
