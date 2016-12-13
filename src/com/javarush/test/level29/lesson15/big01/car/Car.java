@@ -2,21 +2,8 @@ package com.javarush.test.level29.lesson15.big01.car;
 
 import java.util.Date;
 
-/**
- * Разберись с кодом в пакете car (машина).
- * 11.1.	Замена кода ошибки исключением. Перепиши метод заправиться fill(double
- * numberOfLiters), чтобы он в случае ошибки кидал исключение Exception.
- * 11.2.	Разбиение условного оператора.
- * 11.2.1.	Добавь и реализуй метод в классе Car, определяющий относится ли переданная дата к
- * лету: boolean isSummer(Date date , Date summerStart, Date summerEnd).
- * 11.2.2.	Добавь и реализуй метод, рассчитывающий расход топлива зимой: double
- * getWinterConsumption(int length).
- * 11.2.3.	Добавь и реализуй метод, рассчитывающий расход топлива летом: double
- * getSummerConsumption(int length).
- * 11.2.4.	Перепиши метод getTripConsumption(), используя новые методы.
- */
 
-public class Car
+public abstract class Car
 {
     static public final int TRUCK = 0;
     static public final int SEDAN = 1;
@@ -62,38 +49,39 @@ public class Car
     }
 
 
-
-    public boolean isSummer(Date date , Date summerStart, Date summerEnd) {
+    public boolean isSummer(Date date, Date summerStart, Date summerEnd)
+    {
         return (date.before(summerEnd) && date.after(summerStart));
     }
 
 
-    public double getWinterConsumption(int length){
+    public double getWinterConsumption(int length)
+    {
 
         return length * winterFuelConsumption + winterWarmingUp;
     }
-    public double getSummerConsumption(int length){
-        return  length * summerFuelConsumption;
+
+    public double getSummerConsumption(int length)
+    {
+        return length * summerFuelConsumption;
     }
 
     public double getTripConsumption(Date date, int length, Date SummerStart, Date SummerEnd)
     {
-        if (isSummer(date, SummerStart, SummerEnd)) {
+        if (isSummer(date, SummerStart, SummerEnd))
+        {
             return getSummerConsumption(length);
-        }
-        else {
+        } else
+        {
             return getWinterConsumption(length);
         }
     }
 
 
-    public int getNumberOfPassengersCanBeTransferred()
-    {
-        if (!isDriverAvailable())
-            return 0;
-        if (fuel <= 0)
-            return 0;
 
+    public int getNumberOfPassengersCanBeTransferred() {
+        if (!canPassengersBeTransferred())
+            return 0;
         return numberOfPassengers;
     }
 
@@ -109,13 +97,11 @@ public class Car
 
     public void startMoving()
     {
+        fastenDriverBelt();
         if (numberOfPassengers > 0)
         {
             fastenPassengersBelts();
-            fastenDriverBelt();
-        } else
-        {
-            fastenDriverBelt();
+
         }
     }
 
@@ -127,15 +113,12 @@ public class Car
     {
     }
 
-    public int getMaxSpeed()
-    {
-        if (type == TRUCK)
-            return 80;
-        if (type == SEDAN)
-            return 120;
-        return 90;
-    }
+    public abstract int getMaxSpeed();
 
+
+    private boolean canPassengersBeTransferred() {
+        return isDriverAvailable() && fuel > 0;
+    }
 
 
 }
