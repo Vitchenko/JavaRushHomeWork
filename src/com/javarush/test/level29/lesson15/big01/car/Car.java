@@ -2,6 +2,15 @@ package com.javarush.test.level29.lesson15.big01.car;
 
 import java.util.Date;
 
+/**Разберись с кодом в пакете car (машина).
+ 10.1.	Замена конструктора фабричным методом.
+ 10.1.1.	Объяви классы Truck (грузовик), Sedan (седан) и Cabriolet (кабриолет), унаследованные
+ от Car.
+ 10.1.2.	Добавь в них конструкторы, принимающие int numberOfPassengers.
+ 10.1.3.	Добавь фабричный статический метод Car create(int type, int numberOfPassengers) в
+ класс Car.
+ 10.1.4.	Измени область видимости конструктора класса Car. * */
+
 public class Car {
     static public final int TRUCK = 0;
     static public final int SEDAN = 1;
@@ -18,7 +27,7 @@ public class Car {
     private boolean driverAvailable;
     private int numberOfPassengers;
 
-    public Car(int type, int numberOfPassengers) {
+    protected Car(int type, int numberOfPassengers) {
         this.type = type;
         this.numberOfPassengers = numberOfPassengers;
     }
@@ -29,6 +38,15 @@ public class Car {
             return -1;
         fuel += numberOfLiters;
         return 0;
+    }
+
+    public static Car create(int type, int numberOfPassengers){
+        switch (type) {
+            case TRUCK: return new Truck(numberOfPassengers);
+            case SEDAN: return new Sedan(numberOfPassengers);
+            case CABRIOLET: return new Cabriolet(numberOfPassengers);
+            default: return null;
+        }
     }
 
     public double getTripConsumption(Date date, int length, Date SummerStart, Date SummerEnd)
