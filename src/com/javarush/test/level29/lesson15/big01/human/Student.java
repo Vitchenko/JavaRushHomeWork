@@ -31,29 +31,15 @@ public class Student extends UniversityPerson {
 
 
 
+//7.1.	Параметризация метода. Замени методы incAverageGradeBy01() и incAverageGradeBy02()
+//    одним методом incAverageGrade(double delta).
 
-    public void incAverageGradeBy01()
+    public void incAverageGrade(double delta)
     {
-        averageGrade += 0.1;
+        setAverageGrade(getAverageGrade() + delta);
     }
 
-    public void incAverageGradeBy02()
-    {
-        averageGrade += 0.2;
-    }
-//6.1.	Замена параметра набором специализированных методов. Замени метод setValue() класса
-//    Student специализированными методами setCourse и setAverageGrade.
 
-//    public void setValue(String name, double value) {
-//        if (name.equals("averageGrade")) {
-//            averageGrade = value;
-//            return;
-//        }
-//        if (name.equals("course")) {
-//            course = (int)value;
-//            return;
-//        }
-//    }
     public void setCourse(int value){
         course=value;
     }
@@ -61,12 +47,15 @@ public class Student extends UniversityPerson {
         averageGrade = value;
     }
     
-    public void setBeginningOfSession(int day, int month, int year) {
-        beginningOfSession = new Date(year, month, day);
+//    7.4.	Замена параметров объектом. Перепиши методы setBeginningOfSession и setEndOfSession,
+//    чтобы они вместо набора параметров принимали по одному объекту даты.
+
+    public void setBeginningOfSession(Date date) {
+        beginningOfSession = date;
     }
 
-    public void setEndOfSession(int day, int month, int year) {
-        endOfSession = new Date(year, month, day);
+    public void setEndOfSession(Date date) {
+        endOfSession = date;
     }
 
     public double getAverageGrade() {

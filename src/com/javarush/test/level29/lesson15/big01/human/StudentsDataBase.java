@@ -10,8 +10,21 @@ public class StudentsDataBase {
     {
     }
 
-    public static void printInfoAboutStudent(String name, Student student) {
-        System.out.println("Имя: " + name + " Возраст: " + student.getAge());
+//    7.2.	Передача всего объекта. Перепиши метод addInfoAboutStudent(), чтобы он в качестве
+//    параметра принимал объект типа Student.
+
+    public static void addInfoAboutStudent(Student student) {
+        students.add(student);
+        printInfoAboutStudent(student);
+
+    }
+
+//    7.3.	Замена параметра вызовом метода. Перепиши метод printInfoAboutStudent(), чтобы он не
+//    требовал в качестве параметра имя студента, а получал его, вызвав соответствующий
+//    метод у переданного объекта.
+
+    public static void printInfoAboutStudent( Student student) {
+        System.out.println("Имя: " + student.name + " Возраст: " + student.getAge());
     }
 
     public static void removeStudent(int index) throws IndexOutOfBoundsException {
