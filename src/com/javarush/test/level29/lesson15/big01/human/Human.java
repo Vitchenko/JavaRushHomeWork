@@ -12,22 +12,27 @@ public class Human implements Alive {
     protected int age;
     protected String name;
 
+    public class Size{
+        int height;
+        int weight;
+    }
 
-    protected int[] size;
-
-
+    protected Size size;
 
     public static final int FIRST = 1;
     public static final int SECOND = 2;
     public static final int THIRD = 3;
     public static final int FOURTH = 4;
-    private int bloodGroup;
+    private BloodGroup bloodGroup;
 
-    public void setBloodGroup(int code) {
-        bloodGroup = code;
-    }
-    public int getBloodGroup() {
+    public BloodGroup getBloodGroup()
+    {
         return bloodGroup;
+    }
+
+    public void setBloodGroup(BloodGroup bloodGroup)
+    {
+        this.bloodGroup = bloodGroup;
     }
 
     public Human(String name, int age)
@@ -42,8 +47,6 @@ public class Human implements Alive {
         return age;
     }
 
-
-
     public void setAge(int age) {
         this.age = age;
     }
@@ -56,10 +59,6 @@ public class Human implements Alive {
         this.name = name;
     }
 
-
-
-
-//
     public List<Human> getChildren() {
         return Collections.unmodifiableList(children);
     }
@@ -73,27 +72,19 @@ public class Human implements Alive {
 
 
 
-    //    8.1.	Удаление сеттера. Удали метод setId(). Поле id должно устанавливаться только в момент
-//    создания объекта.
     public int getId() {
         return id;
     }
 
-
-
     public void printSize() {
-        System.out.println("Рост: " + size[0] + " Вес: " + size[1]);
+        System.out.println("Рост: " + size.height + " Вес: " + size.weight);
     }
 
-    public void live()
-    {
-    }
+    public void live(){}
 
     public String getPosition(){
         return "Человек";
     }
-
-
 
     public void printData() {
         System.out.println(getPosition() + ": " + name);

@@ -31,8 +31,6 @@ public class Student extends UniversityPerson {
 
 
 
-//7.1.	Параметризация метода. Замени методы incAverageGradeBy01() и incAverageGradeBy02()
-//    одним методом incAverageGrade(double delta).
 
     public void incAverageGrade(double delta)
     {
@@ -47,9 +45,6 @@ public class Student extends UniversityPerson {
         averageGrade = value;
     }
     
-//    7.4.	Замена параметров объектом. Перепиши методы setBeginningOfSession и setEndOfSession,
-//    чтобы они вместо набора параметров принимали по одному объекту даты.
-
     public void setBeginningOfSession(Date date) {
         beginningOfSession = date;
     }
