@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Human implements Alive {
-    public static int nextId = 0;
+
+    private static int nextId = 0;
     private List<Human> children = new ArrayList<>();
     private int id;
     protected int age;
@@ -41,6 +42,8 @@ public class Human implements Alive {
         return age;
     }
 
+
+
     public void setAge(int age) {
         this.age = age;
     }
@@ -70,14 +73,13 @@ public class Human implements Alive {
 
 
 
-//
+    //    8.1.	Удаление сеттера. Удали метод setId(). Поле id должно устанавливаться только в момент
+//    создания объекта.
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public void printSize() {
         System.out.println("Рост: " + size[0] + " Вес: " + size[1]);
