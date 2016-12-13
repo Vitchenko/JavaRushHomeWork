@@ -5,34 +5,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class Human implements Alive {
-
     private static int nextId = 0;
-    private List<Human> children = new ArrayList<>();
-    private int id;
+    private int id = nextId++;
     protected int age;
     protected String name;
 
-    public class Size{
-        int height;
-        int weight;
+    public class Size {
+        public int  height,
+                weight;
     }
 
     protected Size size;
-
-    public static final int FIRST = 1;
-    public static final int SECOND = 2;
-    public static final int THIRD = 3;
-    public static final int FOURTH = 4;
+    private List<Human> children = new ArrayList<>();
     private BloodGroup bloodGroup;
 
-    public BloodGroup getBloodGroup()
-    {
-        return bloodGroup;
+    public void setBloodGroup(BloodGroup bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 
-    public void setBloodGroup(BloodGroup bloodGroup)
-    {
-        this.bloodGroup = bloodGroup;
+    public BloodGroup getBloodGroup() {
+        return bloodGroup;
     }
 
     public Human(String name, int age)
@@ -47,46 +39,40 @@ public class Human implements Alive {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getId() {
+        return id;
     }
 
     public List<Human> getChildren() {
         return Collections.unmodifiableList(children);
     }
 
-    public void addChild(Human child){
+    public void addChild(Human child) {
         children.add(child);
     }
-    public void removeChild(Human child){
+
+    public void removeChild(Human child) {
         children.remove(child);
     }
 
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void printSize() {
-        System.out.println("Рост: " + size.height + " Вес: " + size.weight);
-    }
-
-    public void live(){}
-
-    public String getPosition(){
+    public String getPosition() {
         return "Человек";
     }
 
     public void printData() {
         System.out.println(getPosition() + ": " + name);
+    }
+
+    @Override
+    public void live() {
+
+    }
+
+    public void printSize() {
+        System.out.println("Рост: " + size.height + " Вес: " + size.weight);
     }
 }
