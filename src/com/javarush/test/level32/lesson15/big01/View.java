@@ -28,6 +28,22 @@ public class View extends JFrame implements ActionListener
         this.controller = controller;
     }
 
+    //constructor
+    public View() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (IllegalAccessException e) {
+            ExceptionHandler.log(e);
+        } catch (InstantiationException e) {
+            ExceptionHandler.log(e);
+        } catch (UnsupportedLookAndFeelException e) {
+            ExceptionHandler.log(e);
+        } catch (ClassNotFoundException e) {
+            ExceptionHandler.log(e);
+        }
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -49,7 +65,20 @@ public class View extends JFrame implements ActionListener
     }
 
     public void initMenuBar(){
+        //Создавать новый объект типа JMenuBar. Это и будет наша панель меню
+        JMenuBar jMenuBar = new JMenuBar();
+        //С помощью MenuHelper инициализировать меню
+        MenuHelper.initFileMenu(this, jMenuBar);
+        MenuHelper.initEditMenu(this, jMenuBar);
+        MenuHelper.initStyleMenu(this, jMenuBar);
+        MenuHelper.initAlignMenu(this, jMenuBar);
+        MenuHelper.initColorMenu(this, jMenuBar);
+        MenuHelper.initFontMenu(this, jMenuBar);
+        MenuHelper.initHelpMenu(this, jMenuBar);
 
+        //Добавлять в верхнюю часть панели контента текущего фрейма нашу панель меню, аналогично тому,
+        // как это мы делали с панелью вкладок
+        getContentPane().add(jMenuBar, BorderLayout.NORTH);
     }
 
     public void  initEditor(){
