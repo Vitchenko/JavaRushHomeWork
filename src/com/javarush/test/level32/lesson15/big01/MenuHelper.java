@@ -11,6 +11,9 @@ import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+
+
+
 public class MenuHelper {
     public static JMenuItem addMenuItem(JMenu parent, String text, ActionListener actionListener) {
         JMenuItem menuItem = new JMenuItem(text);
@@ -98,9 +101,9 @@ public class MenuHelper {
 
         styleMenu.addSeparator();
 
-        addMenuItem(styleMenu, "Подстрочный знак", new SubscriptAction());
-        addMenuItem(styleMenu, "Надстрочный знак", new SuperscriptAction());
-        addMenuItem(styleMenu, "Зачеркнутый", new StrikeThroughAction());
+        addMenuItem(styleMenu, "Подстрочный знак", new SubscriptAction(null));
+        addMenuItem(styleMenu, "Надстрочный знак", new SuperscriptAction(null));
+        addMenuItem(styleMenu, "Зачеркнутый", new StrikeThroughAction(null));
 
         styleMenu.addMenuListener(new TextEditMenuListener(view));
     }
