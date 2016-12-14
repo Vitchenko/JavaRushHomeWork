@@ -2,8 +2,12 @@ package com.javarush.test.level32.lesson15.big01;
 
 import com.javarush.test.level32.lesson15.big01.listeners.FrameListener;
 import com.javarush.test.level32.lesson15.big01.listeners.TabbedPaneChangeListener;
+import com.javarush.test.level32.lesson15.big01.listeners.UndoListener;
 
 import javax.swing.*;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +26,9 @@ public class View extends JFrame implements ActionListener
     private JTabbedPane tabbedPane=new JTabbedPane();
     private JTextPane htmlTextPane=new JTextPane();
     private JEditorPane plainTextPane=new JEditorPane();
+
+    private UndoManager undoManager=new UndoManager();
+    private UndoListener undoListener=new UndoListener(undoManager);
 
     public void setController(Controller controller)
     {
@@ -43,6 +50,11 @@ public class View extends JFrame implements ActionListener
         }
     }
 
+
+    public UndoListener getUndoListener()
+    {
+        return undoListener;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e)
@@ -119,11 +131,33 @@ public class View extends JFrame implements ActionListener
 
     public boolean canUndo()
     {
-        return false;
+        return undoManager.canUndo();
     }
 
     public boolean canRedo()
     {
-        return false;
+        return undoManager.canRedo();
     }
+
+    public void undo(){
+        try {
+            undoManager.undo();
+        } catch (CannotUndoException e) {
+            ExceptionHandler.log(e);
+        }
+    }
+
+    public void redo(){
+        try {
+            undoManager.redo();
+        } catch (CannotRedoException e) {
+            ExceptionHandler.log(e);
+        }
+    }
+
+
+    public void resetUndo() {
+        undoManager.discardAllEdits();
+    }
+
 }
