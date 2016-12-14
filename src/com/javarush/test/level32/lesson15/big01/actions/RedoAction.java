@@ -6,7 +6,18 @@ import java.awt.event.ActionEvent;
 import com.javarush.test.level32.lesson15.big01.View;
 
 /**
- * Created by viv on 14.12.2016.
+ 12.1.	Напиши реализацию класса RedoAction:
+ 12.1.1.	Добавь в класс поле View. Добавь его инициализацию в конструкторе.
+ 12.1.2.	Реализуй метод actionPerformed(ActionEvent actionEvent), он должен вызывать метод
+ redo() у представления.
+ 12.2.	Напиши реализацию класса UndoAction по аналогии с RedoAction.
+ 12.3.	Изучи реализацию класса StrikeThroughAction, которую ты получил вместе с заданием и
+ реализуй аналогичным образом классы:
+ 12.3.1.	SubscriptAction
+ 12.3.2.	SuperscriptAction
+ Запусти программу и убедись, что пункты меню Подстрочный знак, Надстрочный знак и
+ Зачеркнутый работают. Пункты, отвечающие за отмену и возврат действия пока не
+ подключены к контроллеру и мы не сможем их проверить.
  */
 public class RedoAction extends AbstractAction
 {
@@ -21,6 +32,6 @@ public class RedoAction extends AbstractAction
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
+        view.redo();
     }
 }
