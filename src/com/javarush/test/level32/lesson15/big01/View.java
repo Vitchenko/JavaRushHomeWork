@@ -15,6 +15,10 @@ public class View extends JFrame implements ActionListener
         return controller;
     }
 
+    private JTabbedPane tabbedPane=new JTabbedPane();
+    private JTextPane htmlTextPane=new JTextPane();
+    private JEditorPane plainTextPane=new JEditorPane();
+
     public void setController(Controller controller)
     {
         this.controller = controller;
