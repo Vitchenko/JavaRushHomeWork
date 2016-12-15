@@ -4,6 +4,7 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
 import java.io.StringReader;
+import java.io.StringWriter;
 
 
 public class Controller
@@ -87,5 +88,25 @@ public class Controller
             //Проследи, чтобы метод не кидал исключения. Их необходимо просто логировать
             ExceptionHandler.log(e);
         }
+    }
+/**Добавь метод String getPlainText() в контроллер. Он должен получать текст из документа со
+ всеми html тегами.
+ 17.1.	Создай объект StringWriter.
+ 17.2.	Перепиши все содержимое из документа document в созданный объект с помощью
+ метода write класса HTMLEditorKit.
+ 17.3.	Как обычно, метод не должен кидать исключений.*/
+    public String getPlainText() {
+        //Создай объект StringWriter
+        StringWriter stringWriter = new StringWriter();
+        try {
+            //Перепиши все содержимое из документа document в созданный объект с помощью метода write класса HTMLEditorKit
+            new HTMLEditorKit().write(stringWriter, document, 0, document.getLength());
+
+        } catch (Exception e) {
+            //Как обычно, метод не должен кидать исключений
+            ExceptionHandler.log(e);
+        }
+
+        return stringWriter.toString();
     }
 }
