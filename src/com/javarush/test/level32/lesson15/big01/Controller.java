@@ -3,6 +3,7 @@ package com.javarush.test.level32.lesson15.big01;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
+import java.io.StringReader;
 
 
 public class Controller
@@ -63,5 +64,28 @@ public class Controller
         document.addUndoableEditListener(view.getUndoListener());
         //Вызывать у представления метод update()
         view.update();
+    }
+/**Добавь метод setPlainText(String text) в контроллер. Он будет записывать переданный текст с
+ html тегами в документ document. При его реализации:
+ 16.1.	Сбрось документ.
+ 16.2.	Создай новый реадер StringReader на базе переданного текста.
+ 16.3.	Вызови метод read() из класса HTMLEditorKit, который вычитает данные из реадера в
+ документ document.
+ 16.4.	Проследи, чтобы метод не кидал исключения. Их необходимо просто логировать.*/
+
+    public void setPlainText(String text) {
+        //Сбрось документ
+        resetDocument();
+        //Создай новый реадер StringReader на базе переданного текста
+        StringReader stringReader = new StringReader(text);
+
+        try {
+            //Вызови метод read() из класса HTMLEditorKit, который вычитает данные из реадера в документ document
+            new HTMLEditorKit().read(stringReader, document, 0);
+
+        } catch (Exception e) {
+            //Проследи, чтобы метод не кидал исключения. Их необходимо просто логировать
+            ExceptionHandler.log(e);
+        }
     }
 }
