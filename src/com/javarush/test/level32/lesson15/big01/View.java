@@ -124,10 +124,7 @@ public class View extends JFrame implements ActionListener
         pack();
     }
 
-    public void selectedTabChanged()
-    {
 
-    }
 
     public boolean canUndo()
     {
@@ -184,4 +181,22 @@ public class View extends JFrame implements ActionListener
     public void showAbout(){
         JOptionPane.showMessageDialog(this, "HTML Editor", "About", JOptionPane.INFORMATION_MESSAGE);
     }
+
+
+    public void selectedTabChanged() {
+        //Метод должен проверить, какая вкладка сейчас оказалась выбранной
+        //Если выбрана вкладка с индексом 0 (html вкладка)
+        if (isHtmlTabSelected()) {
+            //значит нам нужно получить текст из plainTextPane и установить его в контроллер с помощью метода setPlainText
+            controller.setPlainText(plainTextPane.getText());
+        }
+        //сли выбрана вкладка с индексом 1 (вкладка с html текстом)
+        else {
+            //необходимо получить текст у контроллера с помощью метода getPlainText() и установить его в панель plainTextPane
+            plainTextPane.setText(controller.getPlainText());
+        }
+        //Сбросить правки
+        resetUndo();
+    }
+
 }
