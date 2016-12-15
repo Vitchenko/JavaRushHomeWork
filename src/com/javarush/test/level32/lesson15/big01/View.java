@@ -161,5 +161,27 @@ public class View extends JFrame implements ActionListener
     }
 
     public boolean isHtmlTabSelected(){return tabbedPane.getSelectedIndex() == 0; }
+ /**14.1.	Добавь в класс представления метод selectHtmlTab(). Он должен:
+  14.1.1.	Выбирать html вкладку (переключаться на нее).
+  14.1.2.	Сбрасывать все правки с помощью метода, который ты реализовал ранее.
+  14.2.	Добавь в класс контроллера геттер для модели, в нашем случае это поле document.
+  14.3.	Добавь в представление метод update(), который должен получать документ у
+  контроллера и устанавливать его в панель редактирования htmlTextPane.
+  14.4.	Добавь в представление метод showAbout(), который должен показывать диалоговое
+  окно с информацией о программе. Информацию придумай сам, а вот тип сообщения
+  должен быть JOptionPane.INFORMATION_MESSAGE.*/
+    public void selectHtmlTab(){
+        //Выбирать html вкладку (переключаться на нее)
+        tabbedPane.setSelectedIndex(0);
+        //Сбрасывать все правки с помощью метода
+        resetUndo();
+    }
 
+    public void update(){
+       htmlTextPane.setDocument(controller.getDocument());
+    }
+
+    public void showAbout(){
+        JOptionPane.showMessageDialog(this, "HTML Editor", "About", JOptionPane.INFORMATION_MESSAGE);
+    }
 }
