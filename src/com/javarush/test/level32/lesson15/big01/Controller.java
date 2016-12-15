@@ -1,6 +1,7 @@
 package com.javarush.test.level32.lesson15.big01;
 
 import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
 
 
@@ -30,20 +31,37 @@ public class Controller
 
     public static void main(String[] args)
     {
-/**2.2.	Добавь в класс Controller метод main(). Он должен:
- 2.2.1.	Создавать объект представления.
- 2.2.2.	Создавать контроллер, используя представление.
- 2.2.3.	Устанавливать у представления контроллер.
- 2.2.4.	Инициализировать представление.
- 2.2.5.	Инициализировать контроллер. Контроллер должен инициализироваться после представления.
- */
-
         View view=new View();
         Controller controller=new Controller(view);
         view.setController(controller);
         view.init();
         controller.init();
+    }
 
 
+
+    /**Добавь в контроллер метод resetDocument(), который будет сбрасывать текущий документ. Он
+     должен:
+     15.1.	Удалять у текущего документа document слушателя правок которые можно
+     отменить/вернуть (найди подходящий для этого метод, унаследованный от
+     AbstractDocument). Слушателя нужно запросить у представления (метод getUndoListener()).
+     Не забудь проверить, что текущий документ существует (не null).
+     15.2.	Создавать новый документ по умолчанию и присваивать его полю document.
+     Подсказка: воспользуйся подходящим методом класса HTMLEditorKit.
+     15.3.	Добавлять новому документу слушателя правок.
+     15.4.	Вызывать у представления метод update().
+     */
+
+    public void resetDocument(){
+        if (document != null) {
+            //Удалять у текущего документа document слушателя правок которые можно отменить/вернуть
+            document.removeUndoableEditListener(view.getUndoListener());
+        }
+        //Создавать новый документ по умолчанию и присваивать его полю document
+        document = (HTMLDocument) new HTMLEditorKit().createDefaultDocument();
+        //Добавлять новому документу слушателя правок
+        document.addUndoableEditListener(view.getUndoListener());
+        //Вызывать у представления метод update()
+        view.update();
     }
 }
