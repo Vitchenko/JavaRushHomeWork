@@ -1,9 +1,7 @@
 package com.javarush.test.level33.lesson15.big01;
 
 
-import com.javarush.test.level33.lesson15.big01.strategies.HashMapStorageStrategy;
-import com.javarush.test.level33.lesson15.big01.strategies.OurHashMapStorageStrategy;
-import com.javarush.test.level33.lesson15.big01.strategies.StorageStrategy;
+import com.javarush.test.level33.lesson15.big01.strategies.*;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -18,7 +16,13 @@ public class Solution
         testStrategy(strategy, 10000);
 
         OurHashMapStorageStrategy ourstrategy = new OurHashMapStorageStrategy();
-        testStrategy(strategy, 10000);
+        testStrategy(ourstrategy, 10000);
+
+        FileStorageStrategy fileStorageStrategy=new FileStorageStrategy();
+        testStrategy(fileStorageStrategy, 10);
+
+        OurHashBiMapStorageStrategy bistrategy = new OurHashBiMapStorageStrategy();
+        testStrategy(bistrategy, 10000);
     }
 
     public static Set<Long> getIds(Shortener shortener, Set<String> strings){
