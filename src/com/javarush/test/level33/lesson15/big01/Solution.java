@@ -19,7 +19,7 @@ public class Solution
         testStrategy(ourstrategy, 10000);
 
         FileStorageStrategy fileStorageStrategy=new FileStorageStrategy();
-        testStrategy(fileStorageStrategy, 100);
+        testStrategy(fileStorageStrategy, 1);
 
         OurHashBiMapStorageStrategy bistrategy = new OurHashBiMapStorageStrategy();
         testStrategy(bistrategy, 10000);
@@ -27,6 +27,9 @@ public class Solution
 
         HashBiMapStorageStrategy hbistrategy = new HashBiMapStorageStrategy();
         testStrategy(hbistrategy, 10000);
+
+        DualHashBidiMapStorageStrategy dhbistrategy = new DualHashBidiMapStorageStrategy ();
+        testStrategy(dhbistrategy, 10000);
     }
 
     public static Set<Long> getIds(Shortener shortener, Set<String> strings){
