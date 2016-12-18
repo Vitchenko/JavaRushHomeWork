@@ -1,11 +1,14 @@
 package com.javarush.test.level26.lesson15.big01.command;
 
+import com.javarush.test.level26.lesson15.big01.CashMachine;
 import com.javarush.test.level26.lesson15.big01.ConsoleHelper;
 import com.javarush.test.level26.lesson15.big01.exception.InterruptOperationException;
 
+import java.util.ResourceBundle;
+
 public class LoginCommand implements Command
 {
-//    private ResourceBundle validCreditCards = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "verifiedCards");
+    private ResourceBundle validCreditCards = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "verifiedCards");
 //    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "login_en");
 
     @Override
@@ -27,9 +30,9 @@ public class LoginCommand implements Command
    */
 
 
-            if (s1.equals("123456789012"))
+            if (validCreditCards.containsKey(s1))
             {
-                if (s2.equals("1234"))
+                if (validCreditCards.getString(s1).equals(s2))
                     ConsoleHelper.writeMessage(String.format("Credit card [%s] is verified successfully!", s1));
                 else
                 {
