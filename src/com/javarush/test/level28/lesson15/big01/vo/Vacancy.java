@@ -1,5 +1,7 @@
 package com.javarush.test.level28.lesson15.big01.vo;
 
+import java.util.Objects;
+
 /**
  * Created by viv on 07.12.2016.
  */
@@ -71,5 +73,26 @@ public class Vacancy
     public void setUrl(String url)
     {
         this.url = url;
+    }
+
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Vacancy)) return false;
+        Vacancy vacancy = (Vacancy) o;
+        return Objects.equals(title, vacancy.title) &&
+                Objects.equals(salary, vacancy.salary) &&
+                Objects.equals(city, vacancy.city) &&
+                Objects.equals(companyName, vacancy.companyName) &&
+                Objects.equals(siteName, vacancy.siteName) &&
+                Objects.equals(url, vacancy.url);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(title, salary, city, companyName, siteName, url);
     }
 }
