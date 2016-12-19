@@ -12,18 +12,18 @@ import java.util.regex.Pattern;
 
 public class ConsoleHelper
 {
-
     private static ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "common_en");
 
-    static BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void writeMessage(String message){
+    public static void writeMessage(String message)
+    {
         System.out.println(message);
     }
 
     public static void printExitMessage()
     {
-        ConsoleHelper.writeMessage("Terminated. Thank you for visiting JavaRush cash machine. Good luck.");
+        ConsoleHelper.writeMessage(res.getString("the.end"));
     }
 
     public static String readString() throws InterruptOperationException
@@ -31,43 +31,37 @@ public class ConsoleHelper
         String message = "";
         try
         {
-            message = reader.readLine().trim();
-            if (message.equalsIgnoreCase("EXIT")) throw new InterruptOperationException();
+            message = reader.readLine();
+            if (message.equalsIgnoreCase(res.getString("operation.EXIT")))
+                throw new InterruptOperationException();
         }
         catch (IOException ignored)
         {
         }
         return message;
-
     }
-
 
     public static String askCurrencyCode() throws InterruptOperationException
     {
-
         String test;
-        writeMessage("Input valute code?");
+        writeMessage(res.getString("choose.currency.code"));
         while (true)
         {
             test = readString();
             if (test.length() == 3)
                 break;
             else
-                writeMessage("Valute code is incorrect. Repeat please?");
+                writeMessage(res.getString("invalid.data"));
 
         }
         test = test.toUpperCase();
         return test;
-
-
     }
-
 
     public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException
     {
-
         String[] array;
-        writeMessage("Input two digital. First - nominal, Second - banknots qantity?");
+        writeMessage(String.format(res.getString("choose.denomination.and.count.format"), currencyCode));
 
         while (true)
         {
@@ -82,20 +76,18 @@ public class ConsoleHelper
             }
             catch (Exception e)
             {
-                writeMessage("Incorrect. \"200 5\" Repast please");
+                writeMessage(res.getString("invalid.data"));
                 continue;
             }
             if (k <= 0 || l <= 0 || array.length > 2)
             {
-                writeMessage("Incorrect. \"200 5\" Repast please");
+                writeMessage(res.getString("invalid.data"));
                 continue;
             }
             break;
         }
         return array;
-
     }
-
 
     public static Operation askOperation() throws InterruptOperationException
     {
@@ -105,12 +97,10 @@ public class ConsoleHelper
             if (checkWithRegExp(line))
                 return Operation.getAllowableOperationByOrdinal(Integer.parseInt(line));
             else
-                writeMessage("Ведите номер операции");
+                writeMessage(res.getString("invalid.data"));
         }
 
     }
-
-
 
     public static boolean checkWithRegExp(String Name)
     {
@@ -118,7 +108,4 @@ public class ConsoleHelper
         Matcher m = p.matcher(Name);
         return m.matches();
     }
-
-
-
 }
