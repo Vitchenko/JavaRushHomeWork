@@ -4,7 +4,9 @@ import com.javarush.test.level34.lesson15.big01.controller.Controller;
 
 import javax.swing.*;
 
-public class View extends JFrame {
+
+public class View extends JFrame
+{
     private Controller controller;
     private Field field;
 
