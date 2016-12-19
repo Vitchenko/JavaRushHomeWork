@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+
+
 /* Настраиваем логгер
 Дан файл log4j.properties, который содержит настройки для логгера для разработчиков.
 Изменились требования к логированию для продакшена.
