@@ -1,5 +1,6 @@
 package com.javarush.test.level34.lesson15.big01.view;
 
+import com.javarush.test.level34.lesson15.big01.model.Home;
 import com.javarush.test.level34.lesson15.big01.model.Player;
 import com.javarush.test.level34.lesson15.big01.model.Box;
 
@@ -24,5 +25,8 @@ public class Field extends JPanel
 
         Box box=new Box(50,50);
         box.draw(g);
+
+        Home home=new Home(70,70);
+        home.draw(g);
     }
 }
