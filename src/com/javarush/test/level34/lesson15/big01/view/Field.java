@@ -1,5 +1,8 @@
 package com.javarush.test.level34.lesson15.big01.view;
 
+import com.javarush.test.level34.lesson15.big01.model.Player;
+import com.javarush.test.level34.lesson15.big01.model.Box;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,6 +19,10 @@ public class Field extends JPanel
     }
 
     public void paint(Graphics g){
+        Player player=new Player(30,30);
+        player.draw(g);
 
+        Box box=new Box(50,50);
+        box.draw(g);
     }
 }
