@@ -12,9 +12,6 @@ public class Aggregator
 
         Provider provider = new Provider(new HHStrategy());
 
-        Controller controller = new Controller(provider);
-        //System.out.println(controller.toString());
-        controller.scan();
 
 
     }

@@ -1,5 +1,6 @@
 package com.javarush.test.level28.lesson15.big01;
 
+import com.javarush.test.level28.lesson15.big01.model.Model;
 import com.javarush.test.level28.lesson15.big01.model.Provider;
 import com.javarush.test.level28.lesson15.big01.vo.Vacancy;
 
@@ -11,43 +12,33 @@ import java.util.List;
 public class Controller
 {
 
-    private Provider[] providers;
+    //private Provider[] providers;
 
-    public Controller(Provider... providers) throws IllegalArgumentException
+    private Model model;
+
+    public Controller(Model model)
     {
-        if (providers.length == 0) {throw new IllegalArgumentException();}
-
-        this.providers = providers;
-
-    }
-
-    @Override
-    public String toString()
-    {
-        return "Controller{" +"providers=" + Arrays.toString(providers) +'}';
-    }
-//    Внутри метода пройдись по всем провайдерам и собери с них все вакансии, добавь их в список.
-//    Выведи количество вакансий в консоль.
-//
-//5. Исправь NPE, если появляется это исключение (поставь заглушку).
-
-    public void scan()
-    {
-
-        List<Vacancy> vacancies = new ArrayList<>();
-
-        for (Provider provider : providers)
-        {
-            try
-            {
-                for (Vacancy vac : provider.getJavaVacancies("SOME TEXT"))
-                    vacancies.add(vac);
-            }
-            catch (NullPointerException e)
-            {
-                //System.out.println(e);
-            }
+        if (model == null) {
+            throw new IllegalArgumentException("model must be not null");
         }
-        System.out.println(vacancies.size());
+
+        this.model = model;
     }
+/**1.+ Добавь в Controller новое поле Model model.
+
+ 2.+ Удали метод scan() из Controller, его логика переместилась в модель.
+
+ 3. Удали конструктор, toString и поле providers из контроллера.
+
+ 4. Создай конструктор в Controller с аргументом Model.
+ На некорректные данные брось IllegalArgumentException
+
+ 5. В Controller создай публичный метод void onCitySelect(String cityName), в котором вызови нужный метод модели.
+
+ 6. Удали код из метода main. Этот код уже не валидный.*/
+
+public void onCitySelect(String cityName) {
+    model.selectCity(cityName);
+}
+
 }
