@@ -1,14 +1,13 @@
 package com.javarush.test.level34.lesson15.big01.view;
 
 import com.javarush.test.level34.lesson15.big01.controller.EventListener;
-import com.javarush.test.level34.lesson15.big01.model.GameObject;
-import com.javarush.test.level34.lesson15.big01.model.Home;
-import com.javarush.test.level34.lesson15.big01.model.Player;
+import com.javarush.test.level34.lesson15.big01.model.*;
 import com.javarush.test.level34.lesson15.big01.model.Box;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Set;
 
 /**
@@ -19,9 +18,14 @@ public class Field extends JPanel {
     private View view;
     private EventListener eventListener;
 
+//    4.3.	В конструкторе класса Field:
+//            14.3.1.	Создай объект класса KeyHandler.
+//            14.3.2.	Установи его слушателем с помощью метода addKeyListener().
+//            14.3.3.	Установи focusable в true (метод setFocusable()).*/
+
     public Field(View view) {
         this.view = view;
-//        this.addKeyListener(new KeyHandler());
+        this.addKeyListener(new KeyHandler());
         this.setFocusable(true);
     }
 
@@ -58,8 +62,31 @@ public class Field extends JPanel {
 
     public class KeyHandler extends KeyAdapter
     {
+            private Field field;
 
-    }
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                switch (e.getKeyCode()) {
+                    case (KeyEvent.VK_LEFT):
+                        eventListener.move(Direction.LEFT);
+                        break;
+                    case (KeyEvent.VK_RIGHT):
+                        eventListener.move(Direction.RIGHT);
+                        break;
+                    case (KeyEvent.VK_UP):
+                        eventListener.move(Direction.UP);
+                        break;
+                    case (KeyEvent.VK_DOWN):
+                        eventListener.move(Direction.DOWN);
+                        break;
+                    case (KeyEvent.VK_R):
+                        eventListener.restart();
+                        break;
+                }
+            }
+        }
+
 
 
 
