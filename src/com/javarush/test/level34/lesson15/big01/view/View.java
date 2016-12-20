@@ -27,7 +27,7 @@ public class View extends JFrame
     }
 
     public void setEventListener(EventListener eventListener){
-        field.setEventListener(eventListener);
+        this.field.setEventListener(eventListener);
     }
 
 }
