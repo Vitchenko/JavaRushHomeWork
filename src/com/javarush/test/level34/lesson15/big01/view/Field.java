@@ -8,6 +8,7 @@ import com.javarush.test.level34.lesson15.big01.model.Box;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.util.Set;
 
 /**
@@ -41,6 +42,24 @@ public class Field extends JPanel {
         this.eventListener = eventListener;
     }
 
+    /**Добавим немного интерактивности в нашу игру (перемещение игрока с помощью
+     клавиатуры). Начнем с обработки нажатия клавиш клавиатуры.
+     14.1.	Добавь в класс Field вложенный класс KeyHandler унаследованный от
+     KeyAdapter.
+     14.2.	Перегрузи у него метод keyPressed(). Если была нажата клавиша с кодом
+     VK_LEFT, то пошли eventListener-у событие move с параметром Direction.LEFT.
+     Аналогичным образом обработай нажатия клавиш с кодом VK_RIGHT, VK_UP и
+     VK_DOWN. Если пользователь нажал клавишу R с кодом VK_R, то вызови у слушателя
+     событий метод restart().
+     14.3.	В конструкторе класса Field:
+     14.3.1.	Создай объект класса KeyHandler.
+     14.3.2.	Установи его слушателем с помощью метода addKeyListener().
+     14.3.3.	Установи focusable в true (метод setFocusable()).*/
+
+    public class KeyHandler extends KeyAdapter
+    {
+
+    }
 
 
 
