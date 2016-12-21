@@ -1,8 +1,6 @@
 package com.javarush.test.level27.lesson15.big01.ad;
 
 import com.javarush.test.level27.lesson15.big01.ConsoleHelper;
-//import com.javarush.test.level27.lesson15.big01.statistic.StatisticEventManager;
-//import com.javarush.test.level27.lesson15.big01.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,8 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
-  */
+
 
 public class AdvertisementManager {
     private int timeSeconds;
@@ -48,7 +45,7 @@ public class AdvertisementManager {
             }
         });
 
-//        //Register event before showing videos
+        //Register event before showing videos
 //        StatisticEventManager.getInstance().register(
 //                new VideoSelectedEventDataRow(
 //                        optimalVideoList,
