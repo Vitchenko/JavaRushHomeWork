@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
-
 public class AdvertisementManager {
     private int timeSeconds;
 
@@ -45,14 +44,6 @@ public class AdvertisementManager {
             }
         });
 
-        //Register event before showing videos
-//        StatisticEventManager.getInstance().register(
-//                new VideoSelectedEventDataRow(
-//                        optimalVideoList,
-//                        optimalVideoSet.getOptimalVideoSetAmount(),
-//                        optimalVideoSet.getOptimalVideoSetDuration()
-//                )
-//        );
 
         //Show videos & update ads' data
         for (int i = 0; i < optimalVideoList.size(); i++) {

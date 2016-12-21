@@ -15,6 +15,12 @@ public class Person implements Runnable {
             //сделайте что-то тут - do something here
             mail.setText("Person [" + name + "] has written an email 'AAA'");
             //сделайте что-то тут - do something here
+            synchronized (mail) {
+
+
+                mail.notifyAll();
+
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
