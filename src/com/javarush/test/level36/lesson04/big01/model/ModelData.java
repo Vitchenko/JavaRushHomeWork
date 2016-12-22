@@ -12,10 +12,7 @@ public class ModelData
 {
     private List<User> users=new ArrayList<>();
 
-    {
-        users.add(new User("A",1,1));
-        users.add(new User("B",2,2));
-    }
+
 
     public List<User> getUsers()
     {
