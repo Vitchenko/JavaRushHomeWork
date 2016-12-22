@@ -28,5 +28,11 @@ public class Controller
         this.usersView = usersView;
     }
 
-    //Пойди в контроллер и добавь обновление данных во Вью.   Напомню, данные хранятся в Моделе.
+    public void onShowAllDeletedUsers()
+    {
+        model.loadDeletedUsers();
+        usersView.refresh(model.getModelData());
+    }
+
+
 }

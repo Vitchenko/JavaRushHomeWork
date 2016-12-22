@@ -11,12 +11,10 @@ public class UsersView implements View
     private Controller controller;
 
 
-//3. Реализуй логику метода refresh:
-//        3.1. Выведи в консоль фразу "All users:".
-//        3.2. Выведи в консоль всех юзеров, которые есть в modelData.
-//    Перед каждым юзером сделай отступ в виде табуляции.
-//        3.3. В конце выведи визуальный разделитель данных
-//===================================================
+    public void fireEventShowDeletedUsers() {
+        controller.onShowAllDeletedUsers();
+    }
+
 @Override
 public void refresh(ModelData modelData) {
     //if (!modelData.isDisplayDeletedUserList()) {
