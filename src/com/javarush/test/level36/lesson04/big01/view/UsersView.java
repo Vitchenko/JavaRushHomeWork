@@ -1,5 +1,6 @@
 package com.javarush.test.level36.lesson04.big01.view;
 
+import com.javarush.test.level36.lesson04.big01.bean.User;
 import com.javarush.test.level36.lesson04.big01.controller.Controller;
 import com.javarush.test.level36.lesson04.big01.model.ModelData;
 
@@ -15,23 +16,28 @@ public class UsersView implements View
         controller.onShowAllDeletedUsers();
     }
 
-@Override
-public void refresh(ModelData modelData) {
-    //if (!modelData.isDisplayDeletedUserList()) {
-        System.out.println("All users:");
-    //}
-    //if (modelData.isDisplayDeletedUserList()) {
-    //    System.out.println("All deleted users:");
-    //}
+    @Override
+    public void refresh(ModelData modelData) {
 
-    //Выведи в консоль всех юзеров, которые есть в modelData
-    //Перед каждым юзером сделай отступ в виде табуляции
-    for (int i = 0; i < modelData.getUsers().size(); i++) {
-        System.out.println("\t" + modelData.getUsers().get(i));
+        if (modelData.isDisplayDeletedUserList()) {
+            System.out.println("All deleted users:");
+        }else{
+
+        //if (!modelData.isDisplayDeletedUserList()) {
+            System.out.println("All users:");
+        }
+
+        for (int i = 0; i < modelData.getUsers().size(); i++) {
+            System.out.println("\t" + modelData.getUsers().get(i));
+        }
+
+        System.out.println("===================================================");
+
+
     }
-    //В конце выведи визуальный разделитель данных
-    System.out.println("===================================================");
-}
+
+
+
     @Override
     public void setController(Controller controller)
     {
