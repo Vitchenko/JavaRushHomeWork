@@ -26,7 +26,10 @@ public class MainModel implements Model
     {
 
         modelData.setDisplayDeletedUserList(false);
-        modelData.setUsers(userService.getUsersBetweenLevels(1,100));
+        //Достань всех пользователей между 1 и 100 уровнями
+        //Положи всех пользователей в modelData
+        modelData.setUsers(getActiveUsers(userService.getUsersBetweenLevels(1, 100)));
+
     }
 
     @Override
@@ -36,4 +39,26 @@ public class MainModel implements Model
         List<User> users = userService.getAllDeletedUsers();
         modelData.setUsers(users);
     }
+
+    @Override
+    public void loadUserById(long userId)
+    {
+        User user = userService.getUsersById(userId);
+        modelData.setActiveUser(user);
+
+    }
+
+    
+
+    public void deleteUserById(long id) {
+        userService.deleteUser(id);
+        modelData.setDisplayDeletedUserList(false);
+        modelData.setUsers(getActiveUsers(userService.getUsersBetweenLevels(1,100)));
+    }
+
+
+    private List<User> getActiveUsers(List<User> userList){
+        return userService.filterOnlyActiveUsers(userList);
+    }
+
 }

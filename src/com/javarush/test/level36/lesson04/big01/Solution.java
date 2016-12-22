@@ -12,18 +12,6 @@ import com.javarush.test.level36.lesson04.big01.view.UsersView;
 public class Solution {
     public static void main(String[] args)
     {
-//        Model model = new MainModel();
-//        UsersView usersView = new UsersView();
-//        Controller controller = new Controller();
-//
-//        usersView.setController(controller);
-//
-//        controller.setModel(model);
-//        controller.setUsersView(usersView);
-//        usersView.fireEventShowAllUsers();
-//        usersView.fireEventShowDeletedUsers();
-
-
         Model model = new MainModel();
         UsersView usersView = new UsersView();
         EditUserView editUserView = new EditUserView();
@@ -38,11 +26,9 @@ public class Solution {
         controller.setEditUserView(editUserView);
 
         usersView.fireEventShowAllUsers();
-        //usersView.fireEventShowDeletedUsers();
-//        usersView.fireEventOpenUserEditForm(126);
-//
-//        editUserView.fireEventUserDeleted(124);
-//
-//        editUserView.fireEventUserChanged("IPetrov", 125, 15);
+        usersView.fireEventShowDeletedUsers();
+        usersView.fireEventOpenUserEditForm(126);
+
+        editUserView.fireEventUserDeleted(124);
     }
 }
