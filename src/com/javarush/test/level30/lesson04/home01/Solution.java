@@ -1,5 +1,8 @@
 package com.javarush.test.level30.lesson04.home01;
 
+import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.TransferQueue;
+
 /* Экономим время
 1. Создайте Producer и Consumer (См. комментарий к методу main)
 2. Создайте методы toString, equals и hashCode в классе ShareItem. Для этого в теле класса ShareItem выполни:
@@ -29,18 +32,18 @@ public class Solution {
     4. Проделайте п.1-3 для класса Consumer
      */
 
-//    public static void main(String[] args) throws InterruptedException {
-//        TransferQueue<ShareItem> queue = new LinkedTransferQueue<>();
-//
-//        Thread producer = new Thread(new Producer(queue));
-//        Thread consumer = new Thread(new Consumer(queue));
-//        producer.start();
-//        consumer.start();
-//
-//        Thread.sleep(1500);
-//
-//        producer.interrupt();
-//        consumer.interrupt();
-//    }
+    public static void main(String[] args) throws InterruptedException {
+        TransferQueue<ShareItem> queue = new LinkedTransferQueue<>();
+
+        Thread producer = new Thread(new Producer(queue));
+        Thread consumer = new Thread(new Consumer(queue));
+        producer.start();
+        consumer.start();
+
+        Thread.sleep(1500);
+
+        producer.interrupt();
+        consumer.interrupt();
+    }
 
 }

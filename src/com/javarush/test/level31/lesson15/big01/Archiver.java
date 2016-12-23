@@ -1,5 +1,6 @@
 package com.javarush.test.level31.lesson15.big01;
 
+import com.javarush.test.level31.lesson15.big01.command.ExitCommand;
 import com.javarush.test.level31.lesson15.big01.exception.PathIsNotFoundException;
 
 import java.io.BufferedReader;
@@ -24,6 +25,9 @@ public class Archiver
         String textPath2=bf.readLine();
 
         zipFileManager.createZip(Paths.get(textPath2));
+
+        ExitCommand exitCommand=new ExitCommand();
+        exitCommand.execute();
     }
 
 }

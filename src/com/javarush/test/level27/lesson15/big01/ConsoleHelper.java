@@ -9,41 +9,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ConsoleHelper
-{
+public class ConsoleHelper {
 
-    private static BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
 
-    public static void writeMessage(String message){
+    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+
+    public static void writeMessage(String message) {
         System.out.println(message);
     }
-    public static String readString() throws IOException
-    {
 
-        return bf.readLine();
+
+    public static String readString() throws IOException {
+
+        String message;
+        message = reader.readLine();
+
+        return message;
     }
-    public static List<Dish> getAllDishesForOrder() throws IOException
-    {
+
+    public static List<Dish> getAllDishesForOrder() throws IOException {
 
         List<Dish> listDish = new ArrayList<>();
 
-        String str = null;
+        String str = "";
         writeMessage("Выберите блюдо:\n" + Dish.allDishesToString());
 
+
         while (true) {
+
             str = readString();
             if (str.equalsIgnoreCase("exit")) {
                 break;
             }
+
             else {
                 try {
                     listDish.add(Dish.valueOf(str));
                 }
+
                 catch (IllegalArgumentException e) {
                     writeMessage(str + " is not detected");
                 }
             }
         }
+
         return listDish;
     }
 
