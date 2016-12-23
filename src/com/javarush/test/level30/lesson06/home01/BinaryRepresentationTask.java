@@ -1,41 +1,28 @@
 package com.javarush.test.level30.lesson06.home01;
 
-import java.util.concurrent.ForkJoinTask;
+
+import java.util.concurrent.RecursiveTask;
 
 
-public class BinaryRepresentationTask extends ForkJoinTask<String>
+public class BinaryRepresentationTask extends RecursiveTask
 {
-    private String result;
 
-    public BinaryRepresentationTask(int i)
-    {
+    private int i;
 
+    public BinaryRepresentationTask(int i) {
+        this.i = i;
+    }
+
+    @Override
+    protected String compute() {
         int a = i % 2;
         int b = i / 2;
-        result = String.valueOf(a);
-
+        String result = String.valueOf(a);
         if (b > 0) {
-            result= new BinaryRepresentationTask(b) + result;
+            BinaryRepresentationTask task = new BinaryRepresentationTask(b);
+            task.fork();
+            return task.join() + result;
         }
-
-
-    }
-
-    @Override
-    public String getRawResult()
-    {
-        return null;
-    }
-
-    @Override
-    protected void setRawResult(String value)
-    {
-
-    }
-
-    @Override
-    protected boolean exec()
-    {
-        return false;
+        return result;
     }
 }

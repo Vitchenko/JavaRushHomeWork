@@ -28,7 +28,7 @@ public class Solution {
 
         System.out.println();
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        String result2 = forkJoinPool.invoke(new BinaryRepresentationTask(6));
+        String result2 = (String) forkJoinPool.invoke(new BinaryRepresentationTask(6));
         System.out.println(result2);
     }
 
