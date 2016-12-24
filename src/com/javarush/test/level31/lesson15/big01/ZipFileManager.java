@@ -2,33 +2,23 @@ package com.javarush.test.level31.lesson15.big01;
 
 import com.javarush.test.level31.lesson15.big01.exception.PathIsNotFoundException;
 
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import java.util.List;
 import java.util.zip.ZipEntry;
-
 import java.util.zip.ZipOutputStream;
 
-/**
- * Created by viv on 16.12.2016.
- */
-public class ZipFileManager
-{
-    private Path zipFile;
+public class ZipFileManager {
+    // Полный путь zip файла
+    private final Path zipFile;
 
-    public ZipFileManager(Path zipFile)
-    {
+    public ZipFileManager(Path zipFile) {
         this.zipFile = zipFile;
     }
 
-
-
-    public void createZip(Path source) throws Exception
-    {
+    public void createZip(Path source) throws Exception {
         // Проверяем, существует ли директория, где будет создаваться архив
         // При необходимости создаем ее
         Path zipDirectory = zipFile.getParent();
@@ -79,5 +69,4 @@ public class ZipFileManager
             out.write(buffer, 0, len);
         }
     }
-
 }
