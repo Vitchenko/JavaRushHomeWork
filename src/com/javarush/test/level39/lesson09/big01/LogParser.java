@@ -1,6 +1,7 @@
 package com.javarush.test.level39.lesson09.big01;
 
 import com.javarush.test.level39.lesson09.big01.query.IPQuery;
+import com.javarush.test.level39.lesson09.big01.query.UserQuery;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -37,7 +38,8 @@ import java.util.*;
  1.2.5.	Метод getIPsForStatus() должен возвращать IP, события с которых
  закончилось переданным статусом.
  */
-public class LogParser implements IPQuery{
+public class LogParser implements IPQuery, UserQuery
+{
 
     private Path logDir;
     private List<String> linesList;
@@ -218,5 +220,182 @@ public class LogParser implements IPQuery{
             }
         }
         return IPsForEvent;
+    }
+
+    @Override
+    public Set<String> getAllUsers()
+    {
+        Set<String> allUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            allUsers.add(line.split("\\t")[1]);
+        }
+        return allUsers;
+    }
+
+    @Override
+    public int getNumberOfUsers(Date after, Date before)
+    {
+        Set<String> users = new HashSet<>();
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            addStringEntity(after, before, users, parts, 1);
+        }
+        return users.size();
+    }
+
+    @Override
+    public int getNumberOfUserEvents(String user, Date after, Date before)
+    {
+        Set<String> userEvents = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+
+            if (user.equals(parts[1]))
+            {
+                addStringEntity(after, before, userEvents, parts, 2);
+            }
+        }
+        return userEvents.size();
+    }
+
+    @Override
+    public Set<String> getUsersForIP(String ip, Date after, Date before)
+    {
+        Set<String> usersForIP = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+
+            if (ip.equals(parts[0]))
+            {
+                addStringEntity(after, before, usersForIP, parts, 1);
+            }
+        }
+        return usersForIP;
+    }
+
+    @Override
+    public Set<String> getLoggedUsers(Date after, Date before)
+    {
+        Set<String> loggedUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+
+            if (Event.LOGIN.toString().equals(parts[3]))
+            {
+                addStringEntity(after, before, loggedUsers, parts, 1);
+            }
+        }
+        return loggedUsers;
+    }
+
+    @Override
+    public Set<String> getDownloadedPluginUsers(Date after, Date before)
+    {
+        Set<String> downloadedPluginUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+
+            if (Event.DOWNLOAD_PLUGIN.toString().equals(parts[3]))
+            {
+                addStringEntity(after, before, downloadedPluginUsers, parts, 1);
+            }
+        }
+        return downloadedPluginUsers;
+    }
+
+    @Override
+    public Set<String> getWroteMessageUsers(Date after, Date before)
+    {
+        Set<String> wroteMessageUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+
+            if (Event.WRITE_MESSAGE.toString().equals(parts[3]))
+            {
+                addStringEntity(after, before, wroteMessageUsers, parts, 1);
+            }
+        }
+        return wroteMessageUsers;
+    }
+
+    @Override
+    public Set<String> getSolvedTaskUsers(Date after, Date before)
+    {
+        Set<String> solvedTaskUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+
+            if (Event.SOLVE_TASK.toString().equals(parts[3].split(" ")[0]))
+            {
+                addStringEntity(after, before, solvedTaskUsers, parts, 1);
+            }
+        }
+        return solvedTaskUsers;
+    }
+
+    @Override
+    public Set<String> getSolvedTaskUsers(Date after, Date before, int task)
+    {
+        Set<String> solvedTaskUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Event.SOLVE_TASK.toString().equals(parts[3].split(" ")[0])
+                    && task == Integer.valueOf(parts[3].split(" ")[1]))
+            {
+                addStringEntity(after, before, solvedTaskUsers, parts, 1);
+            }
+        }
+        return solvedTaskUsers;
+    }
+
+    @Override
+    public Set<String> getDoneTaskUsers(Date after, Date before)
+    {
+        Set<String> doneTaskUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+
+            if (Event.DONE_TASK.toString().equals(parts[3].split(" ")[0]))
+            {
+                addStringEntity(after, before, doneTaskUsers, parts, 1);
+            }
+        }
+        return doneTaskUsers;
+    }
+
+    @Override
+    public Set<String> getDoneTaskUsers(Date after, Date before, int task)
+    {
+        Set<String> doneTaskUsers = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Event.DONE_TASK.toString().equals(parts[3].split(" ")[0])
+                    && task == Integer.valueOf(parts[3].split(" ")[1]))
+            {
+                addStringEntity(after, before, doneTaskUsers, parts, 1);
+            }
+        }
+        return doneTaskUsers;
     }
 }
