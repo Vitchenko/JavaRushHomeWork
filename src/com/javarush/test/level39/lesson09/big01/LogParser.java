@@ -1,5 +1,6 @@
 package com.javarush.test.level39.lesson09.big01;
 
+import com.javarush.test.level39.lesson09.big01.query.DateQuery;
 import com.javarush.test.level39.lesson09.big01.query.IPQuery;
 import com.javarush.test.level39.lesson09.big01.query.UserQuery;
 
@@ -38,7 +39,7 @@ import java.util.*;
  1.2.5.	Метод getIPsForStatus() должен возвращать IP, события с которых
  закончилось переданным статусом.
  */
-public class LogParser implements IPQuery, UserQuery
+public class LogParser implements IPQuery, UserQuery, DateQuery
 {
 
     private Path logDir;
@@ -397,5 +398,143 @@ public class LogParser implements IPQuery, UserQuery
             }
         }
         return doneTaskUsers;
+    }
+
+    @Override
+    public Set<Date> getDatesForUserAndEvent(String user, Event event, Date after, Date before)
+    {
+        Set<Date> datesForUserAndEvent = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (user.equals(parts[1]) && event.toString().equals(parts[3].split(" ")[0]))
+            {
+                addDateEntity(after, before, datesForUserAndEvent, parts);
+            }
+        }
+        return datesForUserAndEvent;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenSomethingFailed(Date after, Date before)
+    {
+        Set<Date> datesWhenSomethingFailed = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Status.FAILED.toString().equals(parts[4]))
+            {
+                addDateEntity(after, before, datesWhenSomethingFailed, parts);
+            }
+        }
+        return datesWhenSomethingFailed;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenErrorHappened(Date after, Date before)
+    {
+        Set<Date> datesWhenErrorHappened = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Status.ERROR.toString().equals(parts[4]))
+            {
+                addDateEntity(after, before, datesWhenErrorHappened, parts);
+            }
+        }
+        return datesWhenErrorHappened;
+    }
+
+    @Override
+    public Date getDateWhenUserLoggedFirstTime(String user, Date after, Date before)
+    {
+        Date dateWhenUserLoggedFirstTime = new Date(Long.MAX_VALUE);
+        boolean isDateChanged = false;
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (user.equals(parts[1]) && Event.LOGIN.toString().equals(parts[3]))
+            {
+                if (getDate(parts[2]).getTime() < dateWhenUserLoggedFirstTime.getTime())
+                {
+                    dateWhenUserLoggedFirstTime = getDate(parts[2]);
+                    isDateChanged = true;
+                }
+            }
+        }
+        return isDateChanged ? dateWhenUserLoggedFirstTime : null;
+    }
+
+    @Override
+    public Date getDateWhenUserSolvedTask(String user, int task, Date after, Date before)
+    {
+        Date dateWhenUserSolvedTask = new Date(Long.MAX_VALUE);
+        boolean isDateChanged = false;
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (user.equals(parts[1])
+                    && Event.SOLVE_TASK.toString().equals(parts[3].split(" ")[0])
+                    && task == Integer.valueOf(parts[3].split(" ")[1]))
+            {
+                if (getDate(parts[2]).getTime() < dateWhenUserSolvedTask.getTime())
+                {
+                    dateWhenUserSolvedTask = getDate(parts[2]);
+                    isDateChanged = true;
+                }
+            }
+        }
+        return isDateChanged ? dateWhenUserSolvedTask : null;
+    }
+
+    @Override
+    public Date getDateWhenUserDoneTask(String user, int task, Date after, Date before)
+    {
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (user.equals(parts[1])
+                    && Event.DONE_TASK.toString().equals(parts[3].split(" ")[0])
+                    && task == Integer.valueOf(parts[3].split(" ")[1]))
+            {
+                return getDate(parts[2]);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserWroteMessage(String user, Date after, Date before)
+    {
+        Set<Date> datesWhenUserWroteMessage = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (user.equals(parts[1]) && Event.WRITE_MESSAGE.toString().equals(parts[3]))
+            {
+                addDateEntity(after, before, datesWhenUserWroteMessage, parts);
+            }
+        }
+        return datesWhenUserWroteMessage;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserDownloadedPlugin(String user, Date after, Date before)
+    {
+        Set<Date> datesWhenUserDownloadedPlugin = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (user.equals(parts[1]) && Event.DOWNLOAD_PLUGIN.toString().equals(parts[3]))
+            {
+                addDateEntity(after, before, datesWhenUserDownloadedPlugin, parts);
+            }
+        }
+        return datesWhenUserDownloadedPlugin;
     }
 }
