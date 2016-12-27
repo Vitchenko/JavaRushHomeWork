@@ -1,6 +1,7 @@
 package com.javarush.test.level39.lesson09.big01;
 
 import com.javarush.test.level39.lesson09.big01.query.DateQuery;
+import com.javarush.test.level39.lesson09.big01.query.EventQuery;
 import com.javarush.test.level39.lesson09.big01.query.IPQuery;
 import com.javarush.test.level39.lesson09.big01.query.UserQuery;
 
@@ -39,7 +40,7 @@ import java.util.*;
  1.2.5.	Метод getIPsForStatus() должен возвращать IP, события с которых
  закончилось переданным статусом.
  */
-public class LogParser implements IPQuery, UserQuery, DateQuery
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery
 {
 
     private Path logDir;
@@ -536,5 +537,160 @@ public class LogParser implements IPQuery, UserQuery, DateQuery
             }
         }
         return datesWhenUserDownloadedPlugin;
+    }
+
+    @Override
+    public int getNumberOfAllEvents(Date after, Date before)
+    {
+        return getAllEvents(after, before).size();
+    }
+
+    @Override
+    public Set<Event> getAllEvents(Date after, Date before)
+    {
+        Set<Event> eventTypes = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            addEventEntity(after, before, eventTypes, parts);
+        }
+        return eventTypes;
+    }
+
+    @Override
+    public Set<Event> getEventsForIP(String ip, Date after, Date before)
+    {
+        Set<Event> EventsForIP = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (ip.equals(parts[0]))
+            {
+                addEventEntity(after, before, EventsForIP, parts);
+            }
+        }
+        return EventsForIP;
+    }
+
+    @Override
+    public Set<Event> getEventsForUser(String user, Date after, Date before)
+    {
+        Set<Event> EventsForUser = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (user.equals(parts[1]))
+            {
+                addEventEntity(after, before, EventsForUser, parts);
+            }
+        }
+        return EventsForUser;
+    }
+
+    @Override
+    public Set<Event> getFailedEvents(Date after, Date before)
+    {
+        Set<Event> FailedEvents = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Status.FAILED.toString().equals(parts[4]))
+            {
+                addEventEntity(after, before, FailedEvents, parts);
+            }
+        }
+        return FailedEvents;
+    }
+
+    @Override
+    public Set<Event> getErrorEvents(Date after, Date before)
+    {
+        Set<Event> ErrorEvents = new HashSet<>();
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Status.ERROR.toString().equals(parts[4]))
+            {
+                addEventEntity(after, before, ErrorEvents, parts);
+            }
+        }
+        return ErrorEvents;
+    }
+
+    @Override
+    public int getNumberOfAttemptToSolveTask(int task, Date after, Date before)
+    {
+        int numberOfAttemptToSolveTask = 0;
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Event.SOLVE_TASK.toString().equals(parts[3].split(" ")[0])
+                    && task == Integer.valueOf(parts[3].split(" ")[1]))
+            {
+                numberOfAttemptToSolveTask++;
+            }
+        }
+        return numberOfAttemptToSolveTask;
+    }
+
+    @Override
+    public int getNumberOfSuccessfulAttemptToSolveTask(int task, Date after, Date before)
+    {
+        int numberOfSuccessfulAttemptToSolveTask = 0;
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (Event.SOLVE_TASK.toString().equals(parts[3].split(" ")[0])
+                    && task == Integer.valueOf(parts[3].split(" ")[1])
+                    && Status.OK.toString().equals(parts[4]))
+            {
+                numberOfSuccessfulAttemptToSolveTask++;
+            }
+        }
+        return numberOfSuccessfulAttemptToSolveTask;
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllSolvedTasksAndTheirNumber(Date after, Date before)
+    {
+        return getTasksMap(Event.SOLVE_TASK);
+    }
+
+    private Map<Integer, Integer> getTasksMap(Event event)
+    {
+        Map<Integer, Integer> allTasksAndTheirNumber = new HashMap<>();
+        int numberOfSolvedTask;
+        int value;
+
+        for (String line : linesList)
+        {
+            String[] parts = line.split("\\t");
+            if (event.toString().equals(parts[3].split(" ")[0]))
+            {
+                numberOfSolvedTask = Integer.valueOf(parts[3].split(" ")[1]);
+                if (allTasksAndTheirNumber.containsKey(numberOfSolvedTask))
+                {
+                    value = allTasksAndTheirNumber.get(numberOfSolvedTask) + 1;
+                    allTasksAndTheirNumber.put(numberOfSolvedTask, value);
+                } else
+                {
+                    allTasksAndTheirNumber.put(numberOfSolvedTask, 1);
+                }
+            }
+        }
+        return allTasksAndTheirNumber;
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllDoneTasksAndTheirNumber(Date after, Date before)
+    {
+        return getTasksMap(Event.DONE_TASK);
     }
 }
